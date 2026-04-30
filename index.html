@@ -1328,18 +1328,16 @@ function renderTicker(ticker) {
   _tickerLoaded = true;
 }
 
+const STATIC_PHOTOS = ['photos/tap.jpg','photos/delta.jpg','photos/airtransat.jpg','photos/angola.jpg','photos/approach.jpg','photos/unknown.jpg'];
 function renderFeedCards(flights) {
   const grid = document.querySelector('.feed-grid');
   if (!grid || !flights.length) return;
-  // Ne pas remplacer si aucun vol n'a de vraie photo
-  const hasRealPhotos = flights.some(f => f.photo_path && !f.photo_path.includes('/home/'));
-  if (!hasRealPhotos) return;
   const phaseIcon = p => p === 'landing' ? '🛬' : p === 'takeoff' ? '🛫' : '✈️';
   grid.innerHTML = flights.map((f, i) => `
-    <div class="feed-card"${i === 1 ? ' style="grid-row:span 2"' : ''}>
-      <div class="feed-img-placeholder" style="background:linear-gradient(135deg,#0d1117,#111620);">
-        <img src="photos/unknown.jpg" style="width:100%;height:100%;object-fit:cover;">
-        </div>
+    <div class="feed-card">
+      <div class="feed-img-placeholder" style="background:#000;">
+        <img src="${STATIC_PHOTOS[i % STATIC_PHOTOS.length]}" style="width:100%;height:100%;object-fit:cover;opacity:0.85;">
+      </div>
       <div class="feed-overlay">
         <div class="feed-callsign">${f.callsign} ${f.flag || ''} ${phaseIcon(f.phase)}</div>
         <div class="feed-airline">${f.airline || '—'} · ${f.aircraft || '—'}</div>
