@@ -1357,9 +1357,18 @@ async function loadLiveData() {
     const data = await res.json();
     const s = data.stats;
 
-    // Hero stats
-    animateCount(document.getElementById('stat-flights'), s.total_flights, '+');
-    animateCount(document.getElementById('stat-photos'), s.total_photos, '');
+    // Hero stats depuis Gist
+    const elF = document.getElementById('stat-flights');
+    const elP = document.getElementById('stat-photos');
+    if (elF) { elF.textContent = s.total_flights.toLocaleString() + '+'; }
+    if (elP) { elP.textContent = s.total_photos.toLocaleString(); }
+    
+    // Stats section
+    document.querySelectorAll('.stat-big').forEach((el, i) => {
+      if (i === 0) el.innerHTML = s.total_flights.toLocaleString() + '<span class="stat-unit">+</span>';
+      if (i === 1) el.textContent = s.total_photos.toLocaleString();
+      if (i === 2) el.innerHTML = s.peak_noise_db + '<span class="stat-unit"> dB</span>';
+    });
 
     // Noise peaks
     const peakEl = document.querySelector('.noise-peak-val[data-key="peak"]');
@@ -1369,7 +1378,7 @@ async function loadLiveData() {
 
     renderBars(data.noise_by_hour);
     renderTicker(data.ticker);
-    if (data.recent_flights && data.recent_flights.length > 0) renderFeedCards(data.recent_flights);
+    // Feed cards: on garde les photos statiques, pas de remplacement dynamique
 
     // Refresh toutes les 60s
     setTimeout(loadLiveData, 60000);
