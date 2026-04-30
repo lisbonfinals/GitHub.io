@@ -1303,7 +1303,9 @@ function renderBars(noiseByHour) {
   }).join('');
 }
 
+let _tickerLoaded = false;
 function renderTicker(ticker) {
+  if (_tickerLoaded) return;
   const el = document.getElementById('ticker');
   if (!el || !ticker.length) return;
   const items = [...ticker, ...ticker].map(f => `
@@ -1320,11 +1322,18 @@ function renderTicker(ticker) {
     </div>
   `).join('');
   el.innerHTML = items;
+  // Ajuster la vitesse selon le nombre d'items
+  const duration = ticker.length * 4; // 4s par item
+  el.style.animationDuration = duration + 's';
+  _tickerLoaded = true;
 }
 
 function renderFeedCards(flights) {
   const grid = document.querySelector('.feed-grid');
   if (!grid || !flights.length) return;
+  // Ne pas remplacer si aucun vol n'a de vraie photo
+  const hasRealPhotos = flights.some(f => f.photo_path && !f.photo_path.includes('/home/'));
+  if (!hasRealPhotos) return;
   const phaseIcon = p => p === 'landing' ? '🛬' : p === 'takeoff' ? '🛫' : '✈️';
   grid.innerHTML = flights.map((f, i) => `
     <div class="feed-card"${i === 1 ? ' style="grid-row:span 2"' : ''}>
@@ -1362,7 +1371,7 @@ async function loadLiveData() {
 
     renderBars(data.noise_by_hour);
     renderTicker(data.ticker);
-    renderFeedCards(data.recent_flights);
+    if (data.recent_flights && data.recent_flights.length > 0) renderFeedCards(data.recent_flights);
 
     // Refresh toutes les 60s
     setTimeout(loadLiveData, 60000);
