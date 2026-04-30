@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lisbon Finals — Every plane over my Lisbon terrace</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #07090d;
+  --dark: #0a0d12;
+  --dark2: #0d1117;
+  --border: #1e2530;
+  --amber: #f5a623;
+  --amber-dim: rgba(245,166,35,0.12);
+  --white: #f0ede8;
+  --gray: #6b7280;
+  --gray2: #374151;
+  --sky: #bfd8f5;
+  --green: #4ade80;
+  --red: #f87171;
+  --sans: 'Syne', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--amber);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  position: fixed;
+  width: 32px; height: 32px;
+  border: 1px solid rgba(245,166,35,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.15s ease;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(7,9,13,0.95), transparent);
+  backdrop-filter: blur(2px);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-dot {
+  width: 28px; height: 28px;
+  border: 1.5px solid var(--amber);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.nav-dot::after {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--amber);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -60%) rotate(-20deg);
+  clip-path: polygon(50% 0%, 65% 85%, 50% 72%, 35% 85%);
+  width: 10px; height: 12px;
+  background: var(--amber);
+  border-radius: 0;
+}
+.nav-wordmark {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.nav-wordmark span { color: var(--amber); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.5);
+  text-decoration: none;
+  transition: color .2s;
+  font-family: var(--mono);
+}
+.nav-links a:hover { color: var(--amber); }
+
+.nav-cta {
+  padding: 8px 20px;
+  border: 1px solid var(--amber);
+  border-radius: 2px;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--amber) !important;
+  transition: all .2s !important;
+}
+.nav-cta:hover {
+  background: var(--amber) !important;
+  color: var(--black) !important;
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 60% 40%, rgba(245,166,35,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(96,180,255,0.04) 0%, transparent 60%),
+    var(--dark);
+}
+
+/* Grid overlay */
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(30,37,48,0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,37,48,0.4) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 50%, black 30%, transparent 80%);
+}
+
+/* Fake photo cards floating */
+.hero-photos {
+  position: absolute;
+  right: -2%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52%;
+  height: 80vh;
+}
+
+.photo-card {
+  position: absolute;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.08);
+  animation: float linear infinite;
+}
+
+.photo-card:nth-child(1) {
+  width: 340px; height: 220px;
+  top: 5%; right: 8%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+  transform: rotate(-2deg);
+}
+.photo-card:nth-child(2) {
+  width: 280px; height: 180px;
+  top: 35%; right: 2%;
+  animation-duration: 10s;
+  animation-delay: -3s;
+  transform: rotate(1.5deg);
+}
+.photo-card:nth-child(3) {
+  width: 300px; height: 200px;
+  bottom: 8%; right: 12%;
+  animation-duration: 9s;
+  animation-delay: -5s;
+  transform: rotate(-1deg);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, -2deg)); }
+  50% { transform: translateY(-12px) rotate(var(--rot, -2deg)); }
+}
+
+.photo-card-inner {
+  width: 100%; height: 100%;
+  background: var(--dark2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Simulated plane silhouette */
+.plane-silhouette {
+  width: 60%;
+  opacity: 0.85;
+  filter: drop-shadow(0 4px 20px rgba(245,166,35,0.3));
+}
+
+.photo-card-label {
+  position: absolute;
+  bottom: 10px; left: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,237,232,0.6);
+  letter-spacing: .08em;
+}
+.photo-card-airline {
+  position: absolute;
+  top: 10px; right: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--amber);
+  letter-spacing: .06em;
+  background: rgba(245,166,35,0.1);
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid rgba(245,166,35,0.2);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 48px 80px;
+  max-width: 55%;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--amber);
+}
+
+.hero-title {
+  font-size: clamp(52px, 5.5vw, 88px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -.02em;
+  margin-bottom: 28px;
+}
+.hero-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--amber);
+  font-size: 1.05em;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: rgba(240,237,232,0.55);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 48px;
+  font-weight: 400;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+.hero-stat-val {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--white);
+  display: block;
+}
+.hero-stat-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  display: block;
+  margin-top: 4px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-primary {
+  padding: 14px 32px;
+  background: var(--amber);
+  color: var(--black);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: none;
+  text-decoration: none;
+  transition: all .2s;
+  display: inline-block;
+}
+.btn-primary:hover { background: #ffb940; transform: translateY(-1px); }
+
+.btn-secondary {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: rgba(240,237,232,0.5);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color .2s;
+}
+.btn-secondary:hover { color: var(--white); }
+.btn-secondary::after { content: '→'; }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.3);
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(245,166,35,0.6), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+/* TICKER */
+.ticker {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-flex;
+  gap: 64px;
+  animation: ticker 30s linear infinite;
+}
+.ticker-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: rgba(240,237,232,0.35);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ticker-item span { color: var(--amber); }
+.ticker-sep { color: var(--border); }
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* HOW IT WORKS */
+.section {
+  padding: 120px 48px;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--amber);
+}
+
+.section-title {
+  font-size: clamp(36px, 4vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
+.section-title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(240,237,232,0.4);
+}
+
+.section-sub {
+  font-size: 16px;
+  color: rgba(240,237,232,0.45);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 72px;
+}
+
+/* HOW IT WORKS STEPS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.step {
+  padding: 48px 40px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.step:hover { border-color: rgba(245,166,35,0.3); }
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--amber), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.step:hover::before { opacity: 1; }
+
+.step-num {
+  font-family: var(--mono);
+  font-size: 72px;
+  font-weight: 300;
+  color: rgba(245,166,35,0.08);
+  line-height: 1;
+  margin-bottom: 24px;
+  display: block;
+}
+.step-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+.step-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.step-desc {
+  font-size: 14px;
+  color: rgba(240,237,232,0.45);
+  line-height: 1.7;
+}
+.step-tech {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tech-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .08em;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--gray);
+  text-transform: uppercase;
+}
+
+/* LIVE FEED */
+.live-feed-section {
+  background: var(--black);
+  padding: 120px 48px;
+}
+
+.feed-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--green);
+  background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.2);
+  padding: 6px 14px;
+  border-radius: 2px;
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.feed-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.feed-card {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  cursor: none;
+}
+.feed-card:hover .feed-overlay { opacity: 1; }
+.feed-card:hover .feed-img-placeholder { transform: scale(1.05); }
+
+.feed-img-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0d1117 0%, #111620 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .5s ease;
+  position: relative;
+}
+
+.feed-plane-svg {
+  width: 55%;
+  opacity: 0.6;
+}
+
+.feed-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(7,9,13,0.95) 0%, rgba(7,9,13,0.3) 60%, transparent 100%);
+  opacity: 0.7;
+  transition: opacity .3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.feed-callsign {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+.feed-airline {
+  font-size: 12px;
+  color: rgba(240,237,232,0.6);
+  margin-bottom: 8px;
+}
+.feed-data {
+  display: flex;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,237,232,0.35);
+}
+
+/* STATS SECTION */
+.stats-section {
+  padding: 120px 48px;
+  background: var(--dark);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-bottom: 80px;
+}
+
+.stat-card {
+  padding: 40px 32px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  position: relative;
+}
+.stat-accent {
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+}
+.stat-big {
+  font-family: var(--mono);
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 8px;
+  display: block;
+}
+.stat-unit {
+  font-size: 20px;
+  color: rgba(240,237,232,0.4);
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.stat-sub {
+  font-size: 12px;
+  color: rgba(240,237,232,0.3);
+  margin-top: 6px;
+  font-family: var(--mono);
+}
+
+/* NOISE SECTION */
+.noise-section {
+  padding: 120px 48px;
+  background: var(--black);
+}
+
+.noise-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.noise-chart-area {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px;
+  position: relative;
+}
+
+.chart-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 24px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 160px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+/* Threshold line */
+.chart-bars::before {
+  content: 'ANAC limit 65 dB';
+  position: absolute;
+  bottom: 72px;
+  left: 0; right: 0;
+  border-top: 1px dashed rgba(248,113,113,0.5);
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(248,113,113,0.6);
+  padding-top: 4px;
+  letter-spacing: .06em;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  transition: opacity .2s;
+  min-height: 4px;
+}
+.bar:hover { opacity: 0.8; }
+
+.chart-hours {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(240,237,232,0.25);
+}
+
+.noise-peaks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+.noise-peak {
+  padding: 16px;
+  background: var(--black);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+}
+.noise-peak-val {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 500;
+  display: block;
+}
+.noise-peak-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 4px;
+}
+
+.noise-text { }
+.noise-text .section-sub { margin-bottom: 40px; }
+
+.noise-cta {
+  padding: 20px 28px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: rgba(248,113,113,0.04);
+  border-color: rgba(248,113,113,0.2);
+}
+.noise-cta-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--red);
+}
+.noise-cta-text {
+  font-size: 13px;
+  color: rgba(240,237,232,0.45);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.btn-contact {
+  display: inline-block;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid var(--red);
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .2s;
+  cursor: none;
+}
+.btn-contact:hover {
+  background: var(--red);
+  color: var(--black);
+}
+
+/* FOOTER */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 60px 48px 40px;
+}
+
+.footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.footer-brand { max-width: 320px; }
+.footer-brand-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  margin-bottom: 12px;
+}
+.footer-brand-name span { color: var(--amber); }
+.footer-desc {
+  font-size: 13px;
+  color: rgba(240,237,232,0.35);
+  line-height: 1.7;
+}
+
+.footer-links {
+  display: flex;
+  gap: 64px;
+}
+.footer-col-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-size: 13px;
+  color: rgba(240,237,232,0.4);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color .2s;
+  cursor: none;
+}
+.footer-col a:hover { color: var(--amber); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.footer-copy {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(240,237,232,0.2);
+}
+.footer-insta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(240,237,232,0.35);
+  text-decoration: none;
+  transition: color .2s;
+  cursor: none;
+}
+.footer-insta:hover { color: var(--amber); }
+
+/* ANIMATIONS */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-dot"></div>
+    <span class="nav-wordmark">LISBON <span>FINALS</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#feed">Live feed</a></li>
+    <li><a href="#stats">Stats</a></li>
+    <li><a href="#noise">Noise data</a></li>
+    <li><a href="https://instagram.com/lisbon.finals" class="nav-cta">@lisbon.finals</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-photos">
+    <!-- Card 1: TAP A330 -->
+    <div class="photo-card" style="--rot:-2deg; width:360px; height:230px; top:4%; right:6%;">
+      <div class="photo-card-inner" style="background: linear-gradient(135deg, #0d1117, #111620);">
+        <svg class="plane-silhouette" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="58" rx="8" ry="52" fill="#e8e6e0"/>
+          <path d="M93 30 C93 30 10 62 -5 68 C-2 74 2 76 8 73 C24 66 93 44 93 44Z" fill="#e8e6e0"/>
+          <path d="M107 30 C107 30 190 62 205 68 C202 74 198 76 192 73 C176 66 107 44 107 44Z" fill="#e8e6e0"/>
+          <path d="M93 44 C93 44 72 56 68 60 C70 63 73 63 75 61 C79 58 93 50 93 50Z" fill="#e8e6e0" opacity=".8"/>
+          <path d="M107 44 C107 44 128 56 132 60 C130 63 127 63 125 61 C121 58 107 50 107 50Z" fill="#e8e6e0" opacity=".8"/>
+          <ellipse cx="28" cy="58" rx="10" ry="4" fill="#0a0d12" stroke="#e8e6e0" stroke-width="1.2"/>
+          <ellipse cx="172" cy="58" rx="10" ry="4" fill="#0a0d12" stroke="#e8e6e0" stroke-width="1.2"/>
+          <ellipse cx="28" cy="58" rx="5" ry="2" fill="#f5a623" opacity=".5"/>
+          <ellipse cx="172" cy="58" rx="5" ry="2" fill="#f5a623" opacity=".5"/>
+        </svg>
+        <div class="photo-card-airline">TAP AIR PORTUGAL</div>
+        <div class="photo-card-label">TAP28 · 183m · 253 km/h</div>
+      </div>
+    </div>
+
+    <!-- Card 2: Ryanair -->
+    <div class="photo-card" style="--rot:2deg; width:290px; height:190px; top:38%; right:0%;">
+      <div class="photo-card-inner" style="background: linear-gradient(135deg, #0a0e14, #0e1520);">
+        <svg class="plane-silhouette" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="60" rx="7" ry="50" fill="#e8e6e0" opacity=".9"/>
+          <path d="M93 35 C93 35 15 65 0 70 C3 76 7 77 13 74 C28 67 93 48 93 48Z" fill="#e8e6e0" opacity=".9"/>
+          <path d="M107 35 C107 35 185 65 200 70 C197 76 193 77 187 74 C172 67 107 48 107 48Z" fill="#e8e6e0" opacity=".9"/>
+          <path d="M93 48 C93 48 74 58 70 62 C72 65 75 65 77 63 C81 60 93 54 93 54Z" fill="#e8e6e0" opacity=".7"/>
+          <path d="M107 48 C107 48 126 58 130 62 C128 65 125 65 123 63 C119 60 107 54 107 54Z" fill="#e8e6e0" opacity=".7"/>
+          <ellipse cx="30" cy="62" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="170" cy="62" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+        </svg>
+        <div class="photo-card-airline" style="color:#60b4ff;background:rgba(96,180,255,0.1);border-color:rgba(96,180,255,0.2);">RYANAIR</div>
+        <div class="photo-card-label">RYR3421 · 244m · 289 km/h</div>
+      </div>
+    </div>
+
+    <!-- Card 3: Delta -->
+    <div class="photo-card" style="--rot:-1deg; width:310px; height:200px; bottom:5%; right:10%;">
+      <div class="photo-card-inner" style="background: linear-gradient(135deg, #0c1018, #0f1621);">
+        <svg class="plane-silhouette" viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="58" rx="9" ry="56" fill="#e8e6e0" opacity=".85"/>
+          <path d="M91 28 C91 28 -2 64 -18 70 C-15 78 -10 80 -3 76 C14 68 91 44 91 44Z" fill="#e8e6e0" opacity=".85"/>
+          <path d="M109 28 C109 28 202 64 218 70 C215 78 210 80 203 76 C186 68 109 44 109 44Z" fill="#e8e6e0" opacity=".85"/>
+          <path d="M91 44 C91 44 65 56 60 61 C62 65 66 65 68 62 C74 58 91 52 91 52Z" fill="#e8e6e0" opacity=".7"/>
+          <path d="M109 44 C109 44 135 56 140 61 C138 65 134 65 132 62 C126 58 109 52 109 52Z" fill="#e8e6e0" opacity=".7"/>
+          <ellipse cx="20" cy="60" rx="11" ry="4.5" fill="#111" stroke="#e8e6e0" stroke-width="1.2"/>
+          <ellipse cx="50" cy="52" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="150" cy="52" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="180" cy="60" rx="11" ry="4.5" fill="#111" stroke="#e8e6e0" stroke-width="1.2"/>
+        </svg>
+        <div class="photo-card-airline" style="color:#a78bfa;background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.2);">DELTA AIR LINES</div>
+        <div class="photo-card-label">DAL272 · 274m · 298 km/h · 98.6 dB</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Lisbon · LPPT · Runway 03/21</div>
+    <h1 class="hero-title">
+      My Lisbon terrace.<br>
+      Every plane.<br>
+      <em>Captured.</em>
+    </h1>
+    <p class="hero-sub">
+      An autonomous system on a Lisbon terrace tracks every aircraft on final approach and departure — combining ADS-B radar, acoustic sensors, and AI vision to document the skies above Humberto Delgado Airport.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-val" id="stat-flights">3,700+</span>
+        <span class="hero-stat-lbl">Flights tracked</span>
+      </div>
+      <div>
+        <span class="hero-stat-val" id="stat-photos">1,168</span>
+        <span class="hero-stat-lbl">Photos captured</span>
+      </div>
+      <div>
+        <span class="hero-stat-val">99.9<span style="font-size:16px;color:rgba(240,237,232,0.4)"> dB</span></span>
+        <span class="hero-stat-lbl">Peak noise</span>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="https://instagram.com/lisbon.finals" class="btn-primary">Follow on Instagram</a>
+      <a href="#how" class="btn-secondary">How it works</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    scroll
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <div class="ticker-item">TAP28 <span>🇵🇹 TAP Air Portugal</span> <span class="ticker-sep">·</span> A330-900neo <span class="ticker-sep">·</span> 183m <span class="ticker-sep">·</span> 253 km/h</div>
+    <div class="ticker-item">RYR3421 <span>🇮🇪 Ryanair</span> <span class="ticker-sep">·</span> Boeing 737-800 <span class="ticker-sep">·</span> 244m <span class="ticker-sep">·</span> 289 km/h</div>
+    <div class="ticker-item">DAL272 <span>🇺🇸 Delta</span> <span class="ticker-sep">·</span> Boeing 767-300 <span class="ticker-sep">·</span> 274m <span class="ticker-sep">·</span> 98.6 dB SPL</div>
+    <div class="ticker-item">EZY35AB <span>🇬🇧 easyJet</span> <span class="ticker-sep">·</span> Airbus A320 <span class="ticker-sep">·</span> 320m <span class="ticker-sep">·</span> 91 dB SPL</div>
+    <div class="ticker-item">ACA813 <span>🇨🇦 Air Canada</span> <span class="ticker-sep">·</span> A330-300 <span class="ticker-sep">·</span> 587m <span class="ticker-sep">·</span> 92 dB SPL</div>
+    <div class="ticker-item">TAP28 <span>🇵🇹 TAP Air Portugal</span> <span class="ticker-sep">·</span> A330-900neo <span class="ticker-sep">·</span> 183m <span class="ticker-sep">·</span> 253 km/h</div>
+    <div class="ticker-item">RYR3421 <span>🇮🇪 Ryanair</span> <span class="ticker-sep">·</span> Boeing 737-800 <span class="ticker-sep">·</span> 244m <span class="ticker-sep">·</span> 289 km/h</div>
+    <div class="ticker-item">DAL272 <span>🇺🇸 Delta</span> <span class="ticker-sep">·</span> Boeing 767-300 <span class="ticker-sep">·</span> 274m <span class="ticker-sep">·</span> 98.6 dB SPL</div>
+    <div class="ticker-item">EZY35AB <span>🇬🇧 easyJet</span> <span class="ticker-sep">·</span> Airbus A320 <span class="ticker-sep">·</span> 320m <span class="ticker-sep">·</span> 91 dB SPL</div>
+    <div class="ticker-item">ACA813 <span>🇨🇦 Air Canada</span> <span class="ticker-sep">·</span> A330-300 <span class="ticker-sep">·</span> 587m <span class="ticker-sep">·</span> 92 dB SPL</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="section-label">The system</div>
+  <h2 class="section-title reveal">Automated from<br><em>detection to post</em></h2>
+  <p class="section-sub reveal">Three layers of technology working in real time, 24 hours a day, from a residential terrace in Lisbon directly under the final approach path.</p>
+
+  <div class="steps">
+    <div class="step reveal">
+      <span class="step-num">01</span>
+      <span class="step-icon">📡</span>
+      <div class="step-title">Detect</div>
+      <p class="step-desc">ADS-B transponder data is received in real time — altitude, speed, heading, callsign, airline. Cross-referenced with acoustic sensors measuring noise levels in dB SPL.</p>
+      <div class="step-tech">
+        <span class="tech-tag">RTL-SDR</span>
+        <span class="tech-tag">ADS-B</span>
+        <span class="tech-tag">dump1090</span>
+        <span class="tech-tag">dB meter</span>
+      </div>
+    </div>
+    <div class="step reveal" style="transition-delay:.1s">
+      <span class="step-num">02</span>
+      <span class="step-icon">👁</span>
+      <div class="step-title">Capture</div>
+      <p class="step-desc">A 4K dual-lens camera locks onto the aircraft. YOLO neural network validates the frame quality. Claude AI analyzes the image and generates the caption — aircraft type, livery, context.</p>
+      <div class="step-tech">
+        <span class="tech-tag">Reolink 4K</span>
+        <span class="tech-tag">YOLO v8</span>
+        <span class="tech-tag">RTSP</span>
+        <span class="tech-tag">Claude AI</span>
+      </div>
+    </div>
+    <div class="step reveal" style="transition-delay:.2s">
+      <span class="step-num">03</span>
+      <span class="step-icon">✦</span>
+      <div class="step-title">Publish</div>
+      <p class="step-desc">The best frame is automatically published to Instagram with a complete caption — callsign, airline, altitude, speed, noise level. Zero human intervention required.</p>
+      <div class="step-tech">
+        <span class="tech-tag">Raspberry Pi 4</span>
+        <span class="tech-tag">Cloudinary</span>
+        <span class="tech-tag">Meta Graph API</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE FEED -->
+<section class="live-feed-section" id="feed">
+  <div class="feed-header">
+    <div>
+      <div class="section-label">Latest captures</div>
+      <h2 class="section-title" style="margin-bottom:0;">Live <em>from the terrace</em></h2>
+    </div>
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      System active
+    </div>
+  </div>
+
+  <div class="feed-grid">
+    <!-- 6 feed cards with different planes -->
+    <div class="feed-card">
+      <div class="feed-img-placeholder">
+        <svg class="feed-plane-svg" viewBox="0 0 200 120" fill="none">
+          <ellipse cx="100" cy="58" rx="8" ry="52" fill="#e8e6e0" opacity=".7"/>
+          <path d="M92 30C92 30 10 62-5 68C-2 74 2 76 8 73C24 66 92 44 92 44Z" fill="#e8e6e0" opacity=".7"/>
+          <path d="M108 30C108 30 190 62 205 68C202 74 198 76 192 73C176 66 108 44 108 44Z" fill="#e8e6e0" opacity=".7"/>
+          <ellipse cx="28" cy="58" rx="10" ry="4" fill="#0a0d12" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="172" cy="58" rx="10" ry="4" fill="#0a0d12" stroke="#e8e6e0" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="feed-overlay">
+        <div class="feed-callsign">TAP28 🇵🇹</div>
+        <div class="feed-airline">TAP Air Portugal · Airbus A330-900neo</div>
+        <div class="feed-data"><span>183 m</span><span>·</span><span>253 km/h</span><span>·</span><span>91 dB</span></div>
+      </div>
+    </div>
+
+    <div class="feed-card" style="grid-row: span 2;">
+      <div class="feed-img-placeholder" style="height:100%;background:linear-gradient(160deg,#0c1018,#111822);">
+        <svg class="feed-plane-svg" viewBox="0 0 200 140" fill="none" style="width:65%">
+          <ellipse cx="100" cy="68" rx="10" ry="62" fill="#e8e6e0" opacity=".75"/>
+          <path d="M90 30C90 30-5 70-22 76C-19 84-14 86-7 82C12 73 90 50 90 50Z" fill="#e8e6e0" opacity=".75"/>
+          <path d="M110 30C110 30 205 70 222 76C219 84 214 86 207 82C188 73 110 50 110 50Z" fill="#e8e6e0" opacity=".75"/>
+          <path d="M90 50C90 50 60 64 56 70C58 74 62 74 65 71C70 67 90 58 90 58Z" fill="#e8e6e0" opacity=".65"/>
+          <path d="M110 50C110 50 140 64 144 70C142 74 138 74 135 71C130 67 110 58 110 58Z" fill="#e8e6e0" opacity=".65"/>
+          <ellipse cx="18" cy="68" rx="12" ry="5" fill="#111" stroke="#e8e6e0" stroke-width="1.2"/>
+          <ellipse cx="46" cy="58" rx="10" ry="4" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="154" cy="58" rx="10" ry="4" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="182" cy="68" rx="12" ry="5" fill="#111" stroke="#e8e6e0" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div class="feed-overlay" style="opacity:0.85">
+        <div class="feed-callsign">DAL272 🇺🇸</div>
+        <div class="feed-airline">Delta Air Lines · Boeing 767-300</div>
+        <div class="feed-data"><span>274 m</span><span>·</span><span>298 km/h</span><span>·</span><span>98.6 dB</span></div>
+      </div>
+    </div>
+
+    <div class="feed-card">
+      <div class="feed-img-placeholder" style="background:linear-gradient(135deg,#0b0f16,#0f1620);">
+        <svg class="feed-plane-svg" viewBox="0 0 200 120" fill="none">
+          <ellipse cx="100" cy="60" rx="7" ry="50" fill="#e8e6e0" opacity=".65"/>
+          <path d="M93 35C93 35 15 65 0 70C3 76 7 77 13 74C28 67 93 48 93 48Z" fill="#e8e6e0" opacity=".65"/>
+          <path d="M107 35C107 35 185 65 200 70C197 76 193 77 187 74C172 67 107 48 107 48Z" fill="#e8e6e0" opacity=".65"/>
+          <ellipse cx="30" cy="62" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="170" cy="62" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="feed-overlay">
+        <div class="feed-callsign">RYR3421 🇮🇪</div>
+        <div class="feed-airline">Ryanair · Boeing 737-800</div>
+        <div class="feed-data"><span>244 m</span><span>·</span><span>289 km/h</span><span>·</span><span>85 dB</span></div>
+      </div>
+    </div>
+
+    <div class="feed-card">
+      <div class="feed-img-placeholder" style="background:linear-gradient(135deg,#0d1018,#101820);">
+        <svg class="feed-plane-svg" viewBox="0 0 200 120" fill="none">
+          <ellipse cx="100" cy="58" rx="8" ry="52" fill="#e8e6e0" opacity=".6"/>
+          <path d="M92 32C92 32 12 64-4 70C-1 76 3 78 9 75C25 68 92 46 92 46Z" fill="#e8e6e0" opacity=".6"/>
+          <path d="M108 32C108 32 188 64 204 70C201 76 197 78 191 75C175 68 108 46 108 46Z" fill="#e8e6e0" opacity=".6"/>
+          <ellipse cx="26" cy="60" rx="10" ry="4" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="174" cy="60" rx="10" ry="4" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="feed-overlay">
+        <div class="feed-callsign">ACA813 🇨🇦</div>
+        <div class="feed-airline">Air Canada · Airbus A330-300</div>
+        <div class="feed-data"><span>587 m</span><span>·</span><span>288 km/h</span><span>·</span><span>92 dB</span></div>
+      </div>
+    </div>
+
+    <div class="feed-card">
+      <div class="feed-img-placeholder" style="background:linear-gradient(135deg,#090d14,#0e1520);">
+        <svg class="feed-plane-svg" viewBox="0 0 200 120" fill="none">
+          <ellipse cx="100" cy="60" rx="7" ry="48" fill="#e8e6e0" opacity=".55"/>
+          <path d="M93 36C93 36 18 66 2 72C5 78 9 79 15 76C30 69 93 50 93 50Z" fill="#e8e6e0" opacity=".55"/>
+          <path d="M107 36C107 36 182 66 198 72C195 78 191 79 185 76C170 69 107 50 107 50Z" fill="#e8e6e0" opacity=".55"/>
+          <ellipse cx="32" cy="63" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="168" cy="63" rx="9" ry="3.5" fill="#111" stroke="#e8e6e0" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="feed-overlay">
+        <div class="feed-callsign">EZY35AB 🇬🇧</div>
+        <div class="feed-airline">easyJet · Airbus A320</div>
+        <div class="feed-data"><span>320 m</span><span>·</span><span>270 km/h</span><span>·</span><span>88 dB</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section" id="stats">
+  <div class="section-label">By the numbers</div>
+  <h2 class="section-title reveal">The data<br><em>speaks for itself</em></h2>
+
+  <div class="stats-grid">
+    <div class="stat-card reveal">
+      <div class="stat-accent" style="background:var(--amber)"></div>
+      <span class="stat-big" style="color:var(--amber)">3,700<span class="stat-unit">+</span></span>
+      <div class="stat-label">Flights tracked</div>
+      <div class="stat-sub">Since April 18, 2026</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:.08s">
+      <div class="stat-accent" style="background:#4ade80"></div>
+      <span class="stat-big" style="color:#4ade80">1,168</span>
+      <div class="stat-label">Photos captured</div>
+      <div class="stat-sub">By AI · Zero human trigger</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:.16s">
+      <div class="stat-accent" style="background:#f87171"></div>
+      <span class="stat-big" style="color:#f87171">99.9<span class="stat-unit"> dB</span></span>
+      <div class="stat-label">Peak noise recorded</div>
+      <div class="stat-sub">TAP30BC · 244m overhead</div>
+    </div>
+    <div class="stat-card reveal" style="transition-delay:.24s">
+      <div class="stat-accent" style="background:#60b4ff"></div>
+      <span class="stat-big" style="color:#60b4ff">7,400<span class="stat-unit"> km</span></span>
+      <div class="stat-label">Farthest airline</div>
+      <div class="stat-sub">LATAM Airlines · Brazil</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOISE DATA -->
+<section class="noise-section" id="noise">
+  <div class="noise-layout">
+    <div>
+      <div class="section-label">Acoustic monitoring</div>
+      <h2 class="section-title reveal">Noise data<br><em>for everyone</em></h2>
+      <p class="section-sub reveal">
+        Every flight is measured in real time. We record peak SPL levels, duration, and frequency — building a continuous acoustic map of what it means to live under the final approach path to LPPT.
+      </p>
+
+      <div class="noise-cta reveal">
+        <div class="noise-cta-title">Residents & Institutions</div>
+        <p class="noise-cta-text">If you're a resident affected by aircraft noise, a researcher, or an institution like ANAC, we have continuous data that may be relevant to your work.</p>
+        <a href="mailto:lisbon.final.spots@gmail.com" class="btn-contact">Get in touch →</a>
+      </div>
+    </div>
+
+    <div class="noise-chart-area reveal">
+      <div class="chart-title">Average noise by hour — dB SPL · Today</div>
+      <div class="chart-bars" id="chart-bars">
+        <!-- Generated by JS -->
+      </div>
+      <div class="chart-hours">
+        <span>0h</span><span>3h</span><span>6h</span><span>9h</span><span>12h</span><span>15h</span><span>18h</span><span>21h</span><span>23h</span>
+      </div>
+
+      <div class="noise-peaks">
+        <div class="noise-peak">
+          <span class="noise-peak-val" style="color:#f87171">99.9 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
+          <div class="noise-peak-lbl">Peak today</div>
+        </div>
+        <div class="noise-peak">
+          <span class="noise-peak-val" style="color:var(--amber)">90.2 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
+          <div class="noise-peak-lbl">Daily average</div>
+        </div>
+        <div class="noise-peak">
+          <span class="noise-peak-val" style="color:#60b4ff">530</span>
+          <div class="noise-peak-lbl">Flights today</div>
+        </div>
+        <div class="noise-peak">
+          <span class="noise-peak-val" style="color:#4ade80">9h</span>
+          <div class="noise-peak-lbl">Rush hour</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-name">LISBON <span>FINALS</span></div>
+      <p class="footer-desc">An autonomous aircraft spotting and acoustic monitoring system operating 24/7 from a residential terrace in Lisbon, directly under the final approach path to LPPT.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Project</div>
+        <a href="#how">How it works</a>
+        <a href="#stats">Statistics</a>
+        <a href="#noise">Noise data</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Connect</div>
+        <a href="https://instagram.com/lisbon.finals">@lisbon.finals</a>
+        <a href="mailto:lisbon.final.spots@gmail.com">Contact</a>
+        <a href="#">For institutions</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Lisbon Finals · Automated Aviation Intelligence · LPPT</span>
+    <a href="https://instagram.com/lisbon.finals" class="footer-insta">
+      📸 @lisbon.finals
+    </a>
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 4 + 'px';
+  cursor.style.top = my - 4 + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx - 16) * 0.12;
+  ry += (my - ry - 16) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+reveals.forEach(r => observer.observe(r));
+
+// ── GIST LIVE DATA ──────────────────────────────────────────────
+const GIST_URL = 'https://gist.githubusercontent.com/lisbonfinals/2edb053ac9f9c91047c1b36f706d302c/raw/lisbon_finals.json';
+
+function animateCount(el, target, suffix='') {
+  if (!el) return;
+  let current = 0;
+  const step = Math.max(target / 60, 1);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.floor(current).toLocaleString() + suffix;
+    if (current >= target) clearInterval(timer);
+  }, 16);
+}
+
+function renderBars(noiseByHour) {
+  const bars = document.getElementById('chart-bars');
+  if (!bars) return;
+  bars.innerHTML = noiseByHour.map((db, h) => {
+    const pct = Math.max((db / 100) * 100, 1);
+    const isOver = db > 65;
+    const color = isOver
+      ? `rgba(248,113,113,${0.4 + (db - 65) / 50 * 0.5})`
+      : `rgba(245,166,35,0.25)`;
+    return `<div class="bar" style="height:${pct}%;background:${color};" title="${h}h · ${db} dB"></div>`;
+  }).join('');
+}
+
+function renderTicker(ticker) {
+  const el = document.getElementById('ticker');
+  if (!el || !ticker.length) return;
+  const items = [...ticker, ...ticker].map(f => `
+    <div class="ticker-item">
+      ${f.callsign}
+      <span>${f.flag || ''} ${f.airline || '—'}</span>
+      <span class="ticker-sep">·</span>
+      ${f.aircraft || '—'}
+      <span class="ticker-sep">·</span>
+      ${f.alt_m ? f.alt_m + 'm / ' + f.alt_ft + 'ft' : '—'}
+      <span class="ticker-sep">·</span>
+      ${f.speed_kmh ? Math.round(f.speed_kmh) + ' km/h / ' + Math.round(f.speed_kts) + ' kts' : '—'}
+      ${f.noise_db ? '<span class="ticker-sep">·</span> ' + f.noise_db + ' dB' : ''}
+    </div>
+  `).join('');
+  el.innerHTML = items;
+}
+
+function renderFeedCards(flights) {
+  const grid = document.querySelector('.feed-grid');
+  if (!grid || !flights.length) return;
+  const phaseIcon = p => p === 'landing' ? '🛬' : p === 'takeoff' ? '🛫' : '✈️';
+  grid.innerHTML = flights.map((f, i) => `
+    <div class="feed-card"${i === 1 ? ' style="grid-row:span 2"' : ''}>
+      <div class="feed-img-placeholder" style="background:linear-gradient(135deg,#0d1117,#111620);">
+        <svg class="feed-plane-svg" viewBox="0 0 200 120" fill="none">
+          <ellipse cx="100" cy="58" rx="8" ry="52" fill="#e8e6e0" opacity=".7"/>
+          <path d="M92 30C92 30 10 62-5 68C-2 74 2 76 8 73C24 66 92 44 92 44Z" fill="#e8e6e0" opacity=".7"/>
+          <path d="M108 30C108 30 190 62 205 68C202 74 198 76 192 73C176 66 108 44 108 44Z" fill="#e8e6e0" opacity=".7"/>
+          <ellipse cx="28" cy="58" rx="10" ry="4" fill="#0a0d12" stroke="#e8e6e0" stroke-width="1"/>
+          <ellipse cx="172" cy="58" rx="10" ry="4" fill="#0a0d12" stroke="#e8e6e0" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="feed-overlay">
+        <div class="feed-callsign">${f.callsign} ${f.flag || ''} ${phaseIcon(f.phase)}</div>
+        <div class="feed-airline">${f.airline || '—'} · ${f.aircraft || '—'}</div>
+        <div class="feed-data">
+          <span>${f.alt_m}m / ${f.alt_ft}ft</span><span>·</span>
+          <span>${Math.round(f.speed_kmh)} km/h / ${Math.round(f.speed_kts)} kts</span>
+          ${f.noise_db ? `<span>·</span><span>${f.noise_db} dB</span>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function loadLiveData() {
+  try {
+    const res = await fetch(GIST_URL + '?t=' + Date.now());
+    const data = await res.json();
+    const s = data.stats;
+
+    // Hero stats
+    animateCount(document.getElementById('stat-flights'), s.total_flights, '+');
+    animateCount(document.getElementById('stat-photos'), s.total_photos, '');
+
+    // Noise peaks
+    const peakEl = document.querySelector('.noise-peak-val[data-key="peak"]');
+    const todayEl = document.querySelector('.noise-peak-val[data-key="today"]');
+    if (peakEl) peakEl.innerHTML = `${s.peak_noise_db} <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span>`;
+    if (todayEl) todayEl.textContent = s.active_today;
+
+    renderBars(data.noise_by_hour);
+    renderTicker(data.ticker);
+    renderFeedCards(data.recent_flights);
+
+    // Refresh toutes les 60s
+    setTimeout(loadLiveData, 60000);
+  } catch(e) {
+    console.warn('Gist indisponible, données statiques utilisées', e);
+    renderBars([62,58,55,52,50,54,72,85,92,95,94,91,88,90,87,92,95,93,88,84,80,76,70,65]);
+    animateCount(document.getElementById('stat-flights'), 3859, '+');
+    animateCount(document.getElementById('stat-photos'), 1241, '');
+  }
+}
+
+setTimeout(loadLiveData, 300);
+</script>
+</body>
+</html>
