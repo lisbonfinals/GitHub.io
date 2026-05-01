@@ -1381,6 +1381,17 @@ async function loadLiveData() {
     if (nPeak) nPeak.innerHTML = s.peak_noise_db + ' <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span>';
     if (nToday) nToday.textContent = s.active_today;
 
+    // Calculer avg et rush hour depuis noise_by_hour
+    const noiseHours = data.noise_by_hour || [];
+    const nonZero = noiseHours.filter(v => v > 0);
+    if (nonZero.length > 0) {
+      const avg = (nonZero.reduce((a,b) => a+b, 0) / nonZero.length).toFixed(1);
+      if (nAvg) nAvg.innerHTML = avg + ' <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span>';
+      const maxVal = Math.max(...noiseHours);
+      const rushIdx = noiseHours.indexOf(maxVal);
+      if (nRush) nRush.textContent = rushIdx + 'h';
+    }
+
     // Graphique bruit
     renderBars(data.noise_by_hour);
     renderTicker(data.ticker);
