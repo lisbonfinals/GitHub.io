@@ -1380,7 +1380,7 @@ body::after {
     <span style="width:24px;height:1px;background:#f87171;display:inline-block;"></span>
     Night restrictions · ANAC
   </div>
-  <h2 class="section-title reveal" style="font-size:clamp(36px,4vw,60px);">Warning <em>Zone</em></h2>
+  <h2 class="section-title reveal" style="font-size:clamp(36px,4vw,60px);">Warning<br><em>Zone</em></h2>
   <p class="section-sub reveal">
     ANAC strictly regulates night operations at LPPT. Aircraft exceeding 98.9 EPNdB are prohibited between 00:00–06:00. We track every potential violation in real time.
   </p>
@@ -1639,6 +1639,12 @@ async function loadLiveData() {
       if (anacBar) {
         const pct = s.night_flights_week / 91;
         anacBar.style.background = pct > 0.8 ? '#f87171' : pct > 0.5 ? '#f5a623' : '#4ade80';
+      }
+      // Date de début de semaine
+      const weekFrom = document.getElementById('anac-week-from');
+      if (weekFrom && s.night_week_from) {
+        const d = new Date(s.night_week_from);
+        weekFrom.textContent = 'since ' + d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
       }
     }
 
