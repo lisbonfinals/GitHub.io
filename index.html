@@ -1145,21 +1145,21 @@ body::after {
   <div class="stats-grid">
     <div class="stat-card reveal">
       <div class="stat-accent" style="background:var(--amber)"></div>
-      <span class="stat-big" style="color:var(--amber)">3,700<span class="stat-unit">+</span></span>
+      <span class="stat-big" style="color:var(--amber)" id="s-flights">3,700<span class="stat-unit">+</span></span>
       <div class="stat-label">Flights tracked</div>
       <div class="stat-sub">Since April 18, 2026</div>
     </div>
     <div class="stat-card reveal" style="transition-delay:.08s">
       <div class="stat-accent" style="background:#4ade80"></div>
-      <span class="stat-big" style="color:#4ade80">1,168</span>
+      <span class="stat-big" style="color:#4ade80" id="s-photos">1,168</span>
       <div class="stat-label">Photos captured</div>
       <div class="stat-sub">By AI · Zero human trigger</div>
     </div>
     <div class="stat-card reveal" style="transition-delay:.16s">
       <div class="stat-accent" style="background:#f87171"></div>
-      <span class="stat-big" style="color:#f87171">99.9<span class="stat-unit"> dB</span></span>
+      <span class="stat-big" style="color:#f87171" id="s-peak">99.9<span class="stat-unit"> dB</span></span>
       <div class="stat-label">Peak noise recorded</div>
-      <div class="stat-sub">TAP30BC · 244m overhead</div>
+      <div class="stat-sub" id="s-peak-sub">TAP30BC · 244m overhead</div>
     </div>
     <div class="stat-card reveal" style="transition-delay:.24s">
       <div class="stat-accent" style="background:#60b4ff"></div>
@@ -1198,19 +1198,19 @@ body::after {
 
       <div class="noise-peaks">
         <div class="noise-peak">
-          <span class="noise-peak-val" style="color:#f87171">99.9 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
+          <span class="noise-peak-val" style="color:#f87171" id="n-peak">99.9 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
           <div class="noise-peak-lbl">Peak today</div>
         </div>
         <div class="noise-peak">
-          <span class="noise-peak-val" style="color:var(--amber)">90.2 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
+          <span class="noise-peak-val" style="color:var(--amber)" id="n-avg">90.2 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
           <div class="noise-peak-lbl">Daily average</div>
         </div>
         <div class="noise-peak">
-          <span class="noise-peak-val" style="color:#60b4ff">530</span>
+          <span class="noise-peak-val" style="color:#60b4ff" id="n-today">530</span>
           <div class="noise-peak-lbl">Flights today</div>
         </div>
         <div class="noise-peak">
-          <span class="noise-peak-val" style="color:#4ade80">9h</span>
+          <span class="noise-peak-val" style="color:#4ade80" id="n-rush">9h</span>
           <div class="noise-peak-lbl">Rush hour</div>
         </div>
       </div>
@@ -1357,36 +1357,39 @@ async function loadLiveData() {
     const data = await res.json();
     const s = data.stats;
 
-    // Hero stats depuis Gist
+    // Hero stats
     const elF = document.getElementById('stat-flights');
     const elP = document.getElementById('stat-photos');
-    if (elF) { elF.textContent = s.total_flights.toLocaleString() + '+'; }
-    if (elP) { elP.textContent = s.total_photos.toLocaleString(); }
-    
-    // Stats section
-    document.querySelectorAll('.stat-big').forEach((el, i) => {
-      if (i === 0) el.innerHTML = s.total_flights.toLocaleString() + '<span class="stat-unit">+</span>';
-      if (i === 1) el.textContent = s.total_photos.toLocaleString();
-      if (i === 2) el.innerHTML = s.peak_noise_db + '<span class="stat-unit"> dB</span>';
-    });
+    if (elF) elF.textContent = s.total_flights.toLocaleString() + '+';
+    if (elP) elP.textContent = s.total_photos.toLocaleString();
 
-    // Noise peaks
-    const peakEl = document.querySelector('.noise-peak-val[data-key="peak"]');
-    const todayEl = document.querySelector('.noise-peak-val[data-key="today"]');
-    if (peakEl) peakEl.innerHTML = `${s.peak_noise_db} <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span>`;
-    if (todayEl) todayEl.textContent = s.active_today;
+    // Stats section cards
+    const sF = document.getElementById('s-flights');
+    const sP = document.getElementById('s-photos');
+    const sPeak = document.getElementById('s-peak');
+    const sPeakSub = document.getElementById('s-peak-sub');
+    if (sF) sF.innerHTML = s.total_flights.toLocaleString() + '<span class="stat-unit">+</span>';
+    if (sP) sP.textContent = s.total_photos.toLocaleString();
+    if (sPeak) sPeak.innerHTML = s.peak_noise_db + '<span class="stat-unit"> dB</span>';
+    if (sPeakSub) sPeakSub.textContent = (s.peak_noise_flight || '—') + ' · ' + (s.peak_noise_alt_m || '—') + 'm overhead';
 
+    // Noise section
+    const nPeak = document.getElementById('n-peak');
+    const nAvg = document.getElementById('n-avg');
+    const nToday = document.getElementById('n-today');
+    const nRush = document.getElementById('n-rush');
+    if (nPeak) nPeak.innerHTML = s.peak_noise_db + ' <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span>';
+    if (nToday) nToday.textContent = s.active_today;
+
+    // Graphique bruit
     renderBars(data.noise_by_hour);
     renderTicker(data.ticker);
-    // Feed cards: on garde les photos statiques, pas de remplacement dynamique
 
     // Refresh toutes les 60s
     setTimeout(loadLiveData, 60000);
   } catch(e) {
-    console.warn('Gist indisponible, données statiques utilisées', e);
+    console.warn('Gist indisponible', e);
     renderBars([62,58,55,52,50,54,72,85,92,95,94,91,88,90,87,92,95,93,88,84,80,76,70,65]);
-    animateCount(document.getElementById('stat-flights'), 3859, '+');
-    animateCount(document.getElementById('stat-photos'), 1241, '');
   }
 }
 
