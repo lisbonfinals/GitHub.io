@@ -890,6 +890,90 @@ footer {
 }
 .footer-insta:hover { color: var(--amber); }
 
+
+/* ANAC WARNING ZONE */
+.anac-section {
+  padding: 120px 48px;
+  background: var(--dark);
+  border-top: 1px solid rgba(248,113,113,0.15);
+}
+
+.anac-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 48px;
+}
+
+.anac-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.anac-rule {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.anac-rule-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.anac-rule-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--white); }
+.anac-rule-desc { font-size: 12px; color: rgba(240,237,232,0.45); line-height: 1.6; }
+
+.anac-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-content: start;
+}
+
+.anac-stat-card {
+  padding: 24px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.anac-stat-val {
+  font-family: var(--mono);
+  font-size: 36px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.anac-stat-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 4px;
+}
+
+.anac-stat-sub {
+  font-size: 11px;
+  color: rgba(240,237,232,0.3);
+  font-family: var(--mono);
+  margin-bottom: 12px;
+}
+
+.anac-progress {
+  height: 3px;
+  background: rgba(248,113,113,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.anac-progress-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
 /* ANIMATIONS */
 .reveal {
   opacity: 0;
@@ -899,6 +983,59 @@ footer {
 .reveal.visible {
   opacity: 1;
   transform: none;
+}
+
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+
+  .hero { min-height: 100svh; align-items: flex-start; padding-top: 80px; }
+  .hero-content { padding: 0 20px 60px; max-width: 100%; }
+  .hero-title { font-size: clamp(40px, 11vw, 64px); }
+  .hero-photos { display: none; }
+  .hero-stats { gap: 24px; flex-wrap: wrap; }
+  .hero-stat-val { font-size: 22px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .btn-primary { width: 100%; text-align: center; }
+
+  .ticker-inner { gap: 32px; }
+
+  .section { padding: 64px 20px; }
+  .steps { grid-template-columns: 1fr; gap: 2px; }
+  .step { padding: 32px 24px; }
+
+  .live-feed-section { padding: 64px 20px; }
+  .feed-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+  .feed-grid { grid-template-columns: 1fr 1fr; }
+
+  .stats-section { padding: 64px 20px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-big { font-size: 32px; }
+
+  .noise-section { padding: 64px 20px; }
+  .noise-layout { grid-template-columns: 1fr; gap: 40px; }
+
+  .anac-section { padding: 64px 20px; }
+  .anac-grid { grid-template-columns: 1fr; gap: 32px; }
+  .anac-stats { grid-template-columns: 1fr; }
+  .anac-stat-card[style*="grid-column"] { grid-column: span 1; }
+
+  footer { padding: 40px 20px 32px; }
+  .footer-top { flex-direction: column; gap: 32px; }
+  .footer-links { gap: 32px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+  .cursor, .cursor-ring { display: none; }
+  body { cursor: auto; }
+  .btn-primary, .btn-contact, .footer-col a, .nav-cta { cursor: pointer; }
+}
+
+@media (max-width: 480px) {
+  .feed-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 16px; }
 }
 
 /* Grain overlay */
@@ -930,6 +1067,7 @@ body::after {
     <li><a href="#feed">Live feed</a></li>
     <li><a href="#stats">Stats</a></li>
     <li><a href="#noise">Noise data</a></li>
+    <li><a href="#warning" style="color:rgba(248,113,113,0.7);">⚠ Warning</a></li>
     <li><a href="https://instagram.com/lisbon.finals" class="nav-cta">@lisbon.finals</a></li>
   </ul>
 </nav>
@@ -1163,9 +1301,9 @@ body::after {
     </div>
     <div class="stat-card reveal" style="transition-delay:.24s">
       <div class="stat-accent" style="background:#60b4ff"></div>
-      <span class="stat-big" style="color:#60b4ff">7,400<span class="stat-unit"> km</span></span>
-      <div class="stat-label">Farthest airline</div>
-      <div class="stat-sub">LATAM Airlines · Brazil</div>
+      <span class="stat-big" style="color:#60b4ff" id="s-loud">—</span>
+      <div class="stat-label">Flights over 95 dB</div>
+      <div class="stat-sub">Since April 18, 2026</div>
     </div>
   </div>
 </section>
@@ -1213,6 +1351,75 @@ body::after {
           <span class="noise-peak-val" style="color:#4ade80" id="n-rush">9h</span>
           <div class="noise-peak-lbl">Rush hour</div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ANAC WARNING ZONE -->
+<section class="anac-section" id="warning">
+  <div class="section-label" style="color:#f87171;">
+    <span style="width:24px;height:1px;background:#f87171;display:inline-block;"></span>
+    Night restrictions · ANAC
+  </div>
+  <h2 class="section-title reveal">Warning <em>Zone</em></h2>
+  <p class="section-sub reveal">
+    ANAC strictly regulates night operations at LPPT. Aircraft exceeding 98.9 EPNdB are prohibited between 00:00–06:00. We track every potential violation in real time.
+  </p>
+
+  <div class="anac-grid reveal">
+    <!-- Règles ANAC -->
+    <div class="anac-rules">
+      <div class="anac-rule">
+        <div class="anac-rule-icon">🚫</div>
+        <div>
+          <div class="anac-rule-title">Curfew 00:00–06:00</div>
+          <div class="anac-rule-desc">Max 91 movements/week · 26/day. No scheduled flights during night period.</div>
+        </div>
+      </div>
+      <div class="anac-rule">
+        <div class="anac-rule-icon">🔇</div>
+        <div>
+          <div class="anac-rule-title">Noisy Aircraft Ban</div>
+          <div class="anac-rule-desc">Aircraft &gt;98.9 EPNdB (Levels 8 &amp; 16) strictly prohibited at night.</div>
+        </div>
+      </div>
+      <div class="anac-rule">
+        <div class="anac-rule-icon">⚠️</div>
+        <div>
+          <div class="anac-rule-title">Level 2 Restriction</div>
+          <div class="anac-rule-desc">93–95.9 EPNdB aircraft: only 00:00–00:30 and 05:00–06:00.</div>
+        </div>
+      </div>
+      <div class="anac-rule">
+        <div class="anac-rule-icon">🛑</div>
+        <div>
+          <div class="anac-rule-title">Reverse Thrust Banned</div>
+          <div class="anac-rule-desc">Landing reverse thrust is strictly forbidden except in emergencies.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats nocturnes -->
+    <div class="anac-stats">
+      <div class="anac-stat-card" style="border-color:rgba(248,113,113,0.3);">
+        <div class="anac-stat-val" style="color:#f87171;" id="anac-night-flights">—</div>
+        <div class="anac-stat-lbl">Night movements this week</div>
+        <div class="anac-stat-sub">Limit: 91/week</div>
+        <div class="anac-progress">
+          <div class="anac-progress-bar" id="anac-progress-bar" style="background:#f87171;width:0%;"></div>
+        </div>
+      </div>
+      <div class="anac-stat-card" style="border-color:rgba(245,166,35,0.3);">
+        <div class="anac-stat-val" style="color:var(--amber);" id="anac-loud-night">—</div>
+        <div class="anac-stat-lbl">Flights &gt;95 dB all time</div>
+        <div class="anac-stat-sub">Tracked since April 18</div>
+      </div>
+      <div class="anac-stat-card" style="border-color:rgba(248,113,113,0.15);grid-column:span 2;">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;">Data for ANAC & researchers</div>
+        <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin-bottom:16px;">We maintain a continuous acoustic log with timestamps, callsigns, and dB levels — available to residents, researchers, and institutions.</p>
+        <a href="mailto:lisbon.final.spots@gmail.com" class="btn-contact">Request data access →</a>
       </div>
     </div>
   </div>
@@ -1308,8 +1515,11 @@ function renderTicker(ticker) {
   if (_tickerLoaded) return;
   const el = document.getElementById('ticker');
   if (!el || !ticker.length) return;
-  const items = [...ticker, ...ticker].map(f => `
-    <div class="ticker-item">
+  const items = [...ticker, ...ticker].map(f => {
+    const ts = f.timestamp ? f.timestamp.replace('T',' ').substring(0,16) : '';
+    return `<div class="ticker-item">
+      <span style="color:rgba(245,166,35,0.5);font-size:10px;">${ts}</span>
+      <span class="ticker-sep">·</span>
       ${f.callsign}
       <span>${f.flag || ''} ${f.airline || '—'}</span>
       <span class="ticker-sep">·</span>
@@ -1319,8 +1529,8 @@ function renderTicker(ticker) {
       <span class="ticker-sep">·</span>
       ${f.speed_kmh ? Math.round(f.speed_kmh) + ' km/h / ' + Math.round(f.speed_kts) + ' kts' : '—'}
       ${f.noise_db ? '<span class="ticker-sep">·</span> ' + f.noise_db + ' dB' : ''}
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
   el.innerHTML = items;
   // Ajuster la vitesse selon le nombre d'items
   const duration = ticker.length * 4; // 4s par item
@@ -1333,6 +1543,7 @@ function renderFeedCards(flights) {
   const grid = document.querySelector('.feed-grid');
   if (!grid || !flights.length) return;
   const phaseIcon = p => p === 'landing' ? '🛬' : p === 'takeoff' ? '🛫' : '✈️';
+  const ts = f => f.timestamp ? f.timestamp.replace('T',' ').substring(0,16) : '';
   grid.innerHTML = flights.map((f, i) => `
     <div class="feed-card">
       <div class="feed-img-placeholder" style="background:#000;">
@@ -1346,9 +1557,16 @@ function renderFeedCards(flights) {
           <span>${Math.round(f.speed_kmh)} km/h / ${Math.round(f.speed_kts)} kts</span>
           ${f.noise_db ? `<span>·</span><span>${f.noise_db} dB</span>` : ''}
         </div>
+        <div style="margin-top:8px;font-family:var(--mono);font-size:9px;color:rgba(240,237,232,0.3);">${ts(f)}</div>
       </div>
     </div>
-  `).join('');
+  `).join('') + `
+    <div class="feed-card" style="background:rgba(245,166,35,0.04);border:1px solid rgba(245,166,35,0.15);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:32px;text-align:center;">
+      <div style="font-size:28px;">📸</div>
+      <div style="font-family:var(--sans);font-size:14px;font-weight:700;color:var(--white);">Want the real photos?</div>
+      <div style="font-family:var(--mono);font-size:11px;color:rgba(240,237,232,0.45);line-height:1.6;">For premium access to our full photo archive, contact us.</div>
+      <a href="mailto:lisbon.final.spots@gmail.com" style="padding:8px 20px;border:1px solid var(--amber);color:var(--amber);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;">Contact us →</a>
+    </div>`;
 }
 
 async function loadLiveData() {
@@ -1372,6 +1590,8 @@ async function loadLiveData() {
     if (sP) sP.textContent = s.total_photos.toLocaleString();
     if (sPeak) sPeak.innerHTML = s.peak_noise_db + '<span class="stat-unit"> dB</span>';
     if (sPeakSub) sPeakSub.textContent = (s.peak_noise_flight || '—') + ' · ' + (s.peak_noise_alt_m || '—') + 'm overhead';
+    const sLoud = document.getElementById('s-loud');
+    if (sLoud && s.loud_flights_95db !== undefined) sLoud.textContent = s.loud_flights_95db.toLocaleString();
 
     // Noise section
     const nPeak = document.getElementById('n-peak');
@@ -1390,6 +1610,25 @@ async function loadLiveData() {
       const maxVal = Math.max(...noiseHours);
       const rushIdx = noiseHours.indexOf(maxVal);
       if (nRush) nRush.textContent = rushIdx + 'h';
+    }
+    // Rush hour depuis stats si disponible
+    if (s.rush_hour !== undefined && nRush) nRush.textContent = s.rush_hour + 'h';
+
+    // ANAC stats
+    const anacLoud = document.getElementById('anac-loud-night');
+    if (anacLoud && s.loud_flights_95db !== undefined) anacLoud.textContent = s.loud_flights_95db.toLocaleString();
+
+    // Vols nocturnes cette semaine (entre 00h et 06h)
+    const anacNight = document.getElementById('anac-night-flights');
+    const anacBar = document.getElementById('anac-progress-bar');
+    if (data.ticker) {
+      const nightFlights = data.ticker.filter(f => {
+        if (!f.timestamp) return false;
+        const h = parseInt(f.timestamp.substring(11,13));
+        return h >= 0 && h < 6;
+      }).length;
+      if (anacNight) anacNight.textContent = nightFlights;
+      if (anacBar) anacBar.style.width = Math.min((nightFlights / 91) * 100, 100) + '%';
     }
 
     // Graphique bruit
