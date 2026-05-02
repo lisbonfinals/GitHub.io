@@ -1041,6 +1041,7 @@ footer {
 /* ── RADAR HERO ── */
 .hero-radar {
   position: absolute;
+  width: 290px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1051,28 +1052,31 @@ footer {
 }
 
 .hero-radar-label {
+  width: 100%;
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 3px;
   color: rgba(240,237,232,0.35);
   text-transform: uppercase;
+  text-align: center;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
 }
 .hero-radar-label::before,
 .hero-radar-label::after {
   content: '';
-  display: block;
-  width: 20px;
+  flex: 1;
   height: 1px;
-  background: rgba(240,237,232,0.2);
+  background: rgba(240,237,232,0.18);
+  max-width: 36px;
 }
 
 .hero-radar-disc {
   position: relative;
-  width: 270px;
-  height: 270px;
+  width: 290px;
+  height: 290px;
   flex-shrink: 0;
 }
 
@@ -1083,8 +1087,9 @@ footer {
   height: 100%;
   object-fit: cover;
   display: block;
-  mask-image: radial-gradient(circle at center, black 40%, rgba(0,0,0,0.55) 54%, transparent 68%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, rgba(0,0,0,0.55) 54%, transparent 68%);
+  /* Fondue plus légère — disque bien visible */
+  mask-image: radial-gradient(circle at center, black 46%, rgba(0,0,0,0.4) 60%, transparent 74%);
+  -webkit-mask-image: radial-gradient(circle at center, black 46%, rgba(0,0,0,0.4) 60%, transparent 74%);
 }
 
 .hero-radar-svg {
@@ -1093,11 +1098,12 @@ footer {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  mask-image: radial-gradient(circle at center, black 40%, rgba(0,0,0,0.55) 54%, transparent 68%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, rgba(0,0,0,0.55) 54%, transparent 68%);
+  mask-image: radial-gradient(circle at center, black 46%, rgba(0,0,0,0.4) 60%, transparent 74%);
+  -webkit-mask-image: radial-gradient(circle at center, black 46%, rgba(0,0,0,0.4) 60%, transparent 74%);
 }
 
 .hero-radar-meta {
+  width: 100%;
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: 2px;
