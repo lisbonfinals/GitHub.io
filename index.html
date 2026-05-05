@@ -927,7 +927,7 @@ footer {
 
 .anac-stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   align-content: start;
 }
@@ -973,6 +973,105 @@ footer {
   height: 100%;
   border-radius: 2px;
   transition: width 1s ease;
+}
+
+/* Dot pulsant pour infractions actives */
+@keyframes anacDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(248,113,113,0.5); }
+  50% { opacity: 0.7; transform: scale(1.15); box-shadow: 0 0 0 5px rgba(248,113,113,0); }
+}
+.anac-live-dot {
+  width: 7px; height: 7px;
+  background: #f87171;
+  border-radius: 50%;
+  display: none;
+  flex-shrink: 0;
+  animation: anacDotPulse 1.6s ease-in-out infinite;
+}
+.anac-live-dot.amber { background: var(--amber); box-shadow: none; animation-name: anacDotPulseAmber; }
+@keyframes anacDotPulseAmber {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(245,166,35,0.5); }
+  50% { opacity: 0.7; transform: scale(1.15); box-shadow: 0 0 0 5px rgba(245,166,35,0); }
+}
+
+/* Carte "Last Incident" — incident report style */
+.anac-incident-card {
+  grid-column: span 3;
+  padding: 0;
+  background: rgba(248,113,113,0.03);
+  border: 1px solid rgba(248,113,113,0.22);
+  border-radius: 4px;
+  overflow: hidden;
+  display: none;
+}
+.anac-incident-card.amber-incident {
+  background: rgba(245,166,35,0.03);
+  border-color: rgba(245,166,35,0.25);
+}
+.anac-incident-header {
+  padding: 10px 20px;
+  background: rgba(248,113,113,0.07);
+  border-bottom: 1px solid rgba(248,113,113,0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.anac-incident-card.amber-incident .anac-incident-header {
+  background: rgba(245,166,35,0.06);
+  border-bottom-color: rgba(245,166,35,0.15);
+}
+.anac-incident-header-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #f87171;
+  flex: 1;
+}
+.anac-incident-card.amber-incident .anac-incident-header-label { color: var(--amber); }
+.anac-incident-header-ts {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(240,237,232,0.25);
+  letter-spacing: .06em;
+}
+.anac-incident-body {
+  padding: 20px 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: center;
+}
+.anac-incident-callsign {
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+.anac-incident-meta {
+  font-size: 12px;
+  color: rgba(240,237,232,0.4);
+  margin-top: 6px;
+  font-family: var(--mono);
+}
+.anac-incident-db {
+  font-family: var(--mono);
+  font-size: 44px;
+  font-weight: 500;
+  color: #f87171;
+  line-height: 1;
+  text-align: right;
+}
+.anac-incident-card.amber-incident .anac-incident-db { color: var(--amber); }
+.anac-incident-db-unit {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(240,237,232,0.3);
+  text-align: right;
+  margin-top: 3px;
+  letter-spacing: .06em;
 }
 
 /* ANIMATIONS */
@@ -1022,6 +1121,10 @@ footer {
   .anac-grid { grid-template-columns: 1fr; gap: 32px; }
   .anac-stats { grid-template-columns: 1fr; }
   .anac-stat-card[style*="grid-column"] { grid-column: span 1; }
+  .anac-incident-card { grid-column: span 1; }
+  .anac-incident-body { grid-template-columns: 1fr; gap: 12px; }
+  .anac-incident-db { font-size: 32px; text-align: left; }
+  .anac-incident-db-unit { text-align: left; }
 
   footer { padding: 40px 20px 32px; }
   .footer-top { flex-direction: column; gap: 32px; }
@@ -1493,24 +1596,65 @@ body::after {
 
     <!-- Stats nocturnes -->
     <div class="anac-stats">
+
+      <!-- Quota hebdomadaire -->
       <div class="anac-stat-card" style="border-color:rgba(248,113,113,0.3);">
+        <div class="anac-stat-lbl" style="margin-bottom:14px;">Night movements · this week</div>
         <div class="anac-stat-val" style="color:#f87171;" id="anac-night-flights">—</div>
-        <div class="anac-stat-lbl">Night movements this week</div>
-        <div class="anac-stat-sub">Limit: 91/week</div>
-        <div class="anac-progress">
+        <div class="anac-stat-sub">Limit: 91/week · <span id="anac-week-from"></span></div>
+        <div class="anac-progress" style="margin-top:14px;">
           <div class="anac-progress-bar" id="anac-progress-bar" style="background:#f87171;width:0%;"></div>
         </div>
       </div>
-      <div class="anac-stat-card" style="border-color:rgba(245,166,35,0.3);">
-        <div class="anac-stat-val" style="color:var(--amber);" id="anac-loud-night">—</div>
-        <div class="anac-stat-lbl">Flights &gt;95 dB all time</div>
-        <div class="anac-stat-sub">Tracked since May 3, 2026</div>
+
+      <!-- Infractions critiques >98.9 dB -->
+      <div class="anac-stat-card" id="anac-crit-card" style="border-color:rgba(248,113,113,0.2);transition:border-color .4s,background .4s;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span class="anac-live-dot" id="anac-crit-dot"></span>
+          <span class="anac-stat-lbl" style="margin:0;color:#f87171;">Critical violations</span>
+        </div>
+        <div class="anac-stat-val" id="anac-crit-count" style="color:#f87171;">—</div>
+        <div class="anac-stat-sub">&gt;98.9 dB · 00:00–06:00 · strictly banned</div>
+        <div id="anac-crit-ok" style="display:none;font-family:var(--mono);font-size:10px;color:var(--green);margin-top:12px;letter-spacing:.1em;">✓ NONE THIS WEEK</div>
       </div>
-      <div class="anac-stat-card" style="border-color:rgba(248,113,113,0.15);grid-column:span 2;">
+
+      <!-- Infractions niveau 2 -->
+      <div class="anac-stat-card" id="anac-l2-card" style="border-color:rgba(245,166,35,0.2);transition:border-color .4s,background .4s;">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
+          <span class="anac-live-dot amber" id="anac-l2-dot"></span>
+          <span class="anac-stat-lbl" style="margin:0;color:var(--amber);">Level 2 violations</span>
+        </div>
+        <div class="anac-stat-val" id="anac-l2-count" style="color:var(--amber);">—</div>
+        <div class="anac-stat-sub">93–95.9 dB · outside 00:30–05:00 window</div>
+        <div id="anac-l2-ok" style="display:none;font-family:var(--mono);font-size:10px;color:var(--green);margin-top:12px;letter-spacing:.1em;">✓ NONE THIS WEEK</div>
+      </div>
+
+      <!-- Last Incident card -->
+      <div class="anac-incident-card" id="anac-last-inf-card">
+        <div class="anac-incident-header">
+          <span class="anac-live-dot" id="anac-inc-dot" style="display:inline-block;"></span>
+          <span class="anac-incident-header-label" id="anac-inc-type-label">Last incident detected</span>
+          <span class="anac-incident-header-ts" id="anac-inc-ts">—</span>
+        </div>
+        <div class="anac-incident-body">
+          <div>
+            <div class="anac-incident-callsign" id="anac-inc-callsign">—</div>
+            <div class="anac-incident-meta" id="anac-inc-meta">—</div>
+          </div>
+          <div>
+            <div class="anac-incident-db" id="anac-inc-db">—</div>
+            <div class="anac-incident-db-unit">dB SPL</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data for ANAC -->
+      <div class="anac-stat-card" style="border-color:rgba(248,113,113,0.12);grid-column:span 3;">
         <div style="font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;">Data for ANAC & researchers</div>
         <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin-bottom:16px;">We maintain a continuous acoustic log with timestamps, callsigns, and dB levels — available to residents, researchers, and institutions.</p>
         <a href="mailto:lisbon.final.spots@gmail.com" class="btn-contact">Request data access →</a>
       </div>
+
     </div>
   </div>
 </section>
@@ -1744,26 +1888,89 @@ async function loadLiveData() {
     // Rush hour depuis stats si disponible
     if (s.rush_hour !== undefined && nRush) nRush.textContent = s.rush_hour + 'h';
 
-    // ANAC stats
-    const anacLoud = document.getElementById('anac-loud-night');
-    if (anacLoud && s.loud_flights_95db !== undefined) anacLoud.textContent = s.loud_flights_95db.toLocaleString();
-
-    // Vols nocturnes cette semaine depuis Gist
+    // ANAC — quota nocturne hebdomadaire
     const anacNight = document.getElementById('anac-night-flights');
-    const anacBar = document.getElementById('anac-progress-bar');
+    const anacBar   = document.getElementById('anac-progress-bar');
     if (s.night_flights_week !== undefined) {
       if (anacNight) anacNight.textContent = s.night_flights_week;
-      if (anacBar) anacBar.style.width = Math.min((s.night_flights_week / 91) * 100, 100) + '%';
-      // Couleur selon quota
+      const pct = s.night_flights_week / 91;
       if (anacBar) {
-        const pct = s.night_flights_week / 91;
+        anacBar.style.width      = Math.min(pct * 100, 100) + '%';
         anacBar.style.background = pct > 0.8 ? '#f87171' : pct > 0.5 ? '#f5a623' : '#4ade80';
       }
-      // Date de début de semaine
       const weekFrom = document.getElementById('anac-week-from');
       if (weekFrom && s.night_week_from) {
         const d = new Date(s.night_week_from);
         weekFrom.textContent = 'since ' + d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+      }
+    }
+
+    // ANAC — infractions critiques >98.9 dB
+    const critCount = s.night_infraction_critical;
+    if (critCount !== undefined) {
+      const el = document.getElementById('anac-crit-count');
+      if (el) el.textContent = critCount;
+      if (critCount > 0) {
+        const dot  = document.getElementById('anac-crit-dot');
+        const card = document.getElementById('anac-crit-card');
+        if (dot)  dot.style.display = 'inline-block';
+        if (card) { card.style.borderColor = 'rgba(248,113,113,0.5)'; card.style.background = 'rgba(248,113,113,0.05)'; }
+      } else {
+        const ok = document.getElementById('anac-crit-ok');
+        const el2 = document.getElementById('anac-crit-count');
+        if (ok)  ok.style.display = 'block';
+        if (el2) el2.style.color  = 'var(--green)';
+      }
+    }
+
+    // ANAC — infractions niveau 2
+    const l2Count = s.night_infraction_l2;
+    if (l2Count !== undefined) {
+      const el = document.getElementById('anac-l2-count');
+      if (el) el.textContent = l2Count;
+      if (l2Count > 0) {
+        const dot  = document.getElementById('anac-l2-dot');
+        const card = document.getElementById('anac-l2-card');
+        if (dot)  dot.style.display = 'inline-block';
+        if (card) { card.style.borderColor = 'rgba(245,166,35,0.45)'; card.style.background = 'rgba(245,166,35,0.04)'; }
+      } else {
+        const ok = document.getElementById('anac-l2-ok');
+        const el2 = document.getElementById('anac-l2-count');
+        if (ok)  ok.style.display = 'block';
+        if (el2) el2.style.color  = 'var(--green)';
+      }
+    }
+
+    // ANAC — dernière infraction (incident card)
+    if (s.last_infraction_callsign) {
+      const card      = document.getElementById('anac-last-inf-card');
+      const callsign  = document.getElementById('anac-inc-callsign');
+      const meta      = document.getElementById('anac-inc-meta');
+      const dbEl      = document.getElementById('anac-inc-db');
+      const tsEl      = document.getElementById('anac-inc-ts');
+      const typeLabel = document.getElementById('anac-inc-type-label');
+      const incDot    = document.getElementById('anac-inc-dot');
+      const isCrit    = s.last_infraction_type === 'critical';
+
+      if (card)     card.style.display = 'block';
+      if (callsign) callsign.textContent = s.last_infraction_callsign;
+      if (meta)     meta.textContent = s.last_infraction_airline || 'Unknown operator';
+      if (dbEl)     dbEl.textContent = s.last_infraction_db ? s.last_infraction_db.toFixed(1) : '—';
+
+      if (s.last_infraction_time) {
+        const d    = new Date(s.last_infraction_time);
+        const time = d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+        const date = d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+        if (tsEl) tsEl.textContent = time + ' · ' + date;
+      }
+
+      if (!isCrit) {
+        if (card)      { card.classList.add('amber-incident'); }
+        if (typeLabel) typeLabel.textContent = '⚠️ Level 2 violation · outside allowed window';
+        if (dbEl)      dbEl.style.color = 'var(--amber)';
+        if (incDot)    { incDot.classList.add('amber'); }
+      } else {
+        if (typeLabel) typeLabel.textContent = '🚨 Critical violation · strictly prohibited';
       }
     }
 
