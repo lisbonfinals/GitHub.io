@@ -624,6 +624,27 @@ nav {
   font-size: 10px;
   color: rgba(240,237,232,0.35);
 }
+/* Feed timestamp strip */
+.feed-timestamp {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(245,166,35,0.7);
+  margin-bottom: auto;
+  padding-bottom: 12px;
+}
+
+/* Feed skeleton loading */
+.feed-skeleton {
+  background: var(--dark2);
+  animation: skelPulse 1.8s ease-in-out infinite;
+}
+@keyframes skelPulse {
+  0%,100% { opacity: 0.4; }
+  50%      { opacity: 0.7; }
+}
+
 
 /* STATS SECTION */
 .stats-section {
@@ -1398,73 +1419,82 @@ body::after {
     </div>
     <a href="mailto:lisbon.final.spots@gmail.com" style="flex-shrink:0;padding:10px 24px;border:1px solid var(--amber);color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;white-space:nowrap;border-radius:2px;transition:all .2s;">Contact us →</a>
   </div>
-  <div class="feed-grid">
-    <div class="feed-card">
-      <div class="feed-img-placeholder">
-        <img src="photos/unknown.jpg" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="feed-overlay">
-        <div class="feed-callsign">TAP28 🇵🇹 🛬</div>
-        <div class="feed-airline">TAP Air Portugal · Airbus A330-900neo</div>
-        <div class="feed-data"><span>183m / 600ft</span><span>·</span><span>253 km/h / 137 kts</span><span>·</span><span>91 dB</span></div>
-      </div>
-    </div>
+  <div class="feed-grid" id="feed-grid">
+  <div class="feed-card feed-skeleton"></div>
+  <div class="feed-card feed-skeleton"></div>
+  <div class="feed-card feed-skeleton"></div>
+  <div class="feed-card feed-skeleton"></div>
+  <div class="feed-card feed-skeleton"></div>
+  <div class="feed-card feed-skeleton"></div>
+</div>
+<script>
+(function() {
+  // ← Remplacer par le GIST_ID affiché par create_gist.py
+  var GIST_ID = '943998ff407a141792bcd5d2c5f3fc36';
 
-    <div class="feed-card">
-      <div class="feed-img-placeholder">
-        <img src="photos/delta.jpg" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="feed-overlay">
-        <div class="feed-callsign">DAL272 🇺🇸 🛬</div>
-        <div class="feed-airline">Delta Air Lines · Boeing 767-300ER</div>
-        <div class="feed-data"><span>274m / 900ft</span><span>·</span><span>298 km/h / 161 kts</span><span>·</span><span>98.6 dB</span></div>
-      </div>
-    </div>
+  function phaseIcon(phase) {
+    if (!phase) return '\u2708\uFE0F';
+    phase = phase.toLowerCase();
+    if (phase.match(/landing|approach|final/)) return '\uD83D\uDEEC';
+    if (phase.match(/takeoff|climb|departure/)) return '\uD83D\uDEEB';
+    return '\u2708\uFE0F';
+  }
 
-    <div class="feed-card">
-      <div class="feed-img-placeholder">
-        <img src="photos/angola.jpg" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="feed-overlay">
-        <div class="feed-callsign">DTA650 🇦🇴 🛬</div>
-        <div class="feed-airline">TAAG Angola Airlines · Boeing 777-300ER</div>
-        <div class="feed-data"><span>190m / 625ft</span><span>·</span><span>278 km/h / 150 kts</span><span>·</span><span>96.2 dB</span></div>
-      </div>
-    </div>
+  function formatDate(ts) {
+    if (!ts) return '';
+    try {
+      var d = new Date(ts);
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var day = String(d.getDate()).padStart(2,'0');
+      var h   = String(d.getHours()).padStart(2,'0');
+      var m   = String(d.getMinutes()).padStart(2,'0');
+      return day + ' ' + months[d.getMonth()] + ' \u00B7 ' + h + ':' + m;
+    } catch(e) { return ''; }
+  }
 
-    <div class="feed-card">
-      <div class="feed-img-placeholder">
-        <img src="photos/airtransat.jpg" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="feed-overlay">
-        <div class="feed-callsign">TSC275 🇨🇦 🛬</div>
-        <div class="feed-airline">Air Transat · Airbus A330-200</div>
-        <div class="feed-data"><span>244m / 800ft</span><span>·</span><span>268 km/h / 145 kts</span><span>·</span><span>93.1 dB</span></div>
-      </div>
-    </div>
+  function renderCard(p) {
+    var icon = phaseIcon(p.phase);
+    var alt  = (p.altitude_m && p.altitude_ft) ? p.altitude_m + 'm / ' + p.altitude_ft + 'ft' : '';
+    var spd  = (p.speed_kmh && p.speed_kts)    ? p.speed_kmh + ' km/h / ' + p.speed_kts + ' kts' : '';
+    var spl  = p.spl_db ? p.spl_db + ' dB' : '';
+    var parts = [alt, spd, spl].filter(Boolean);
+    var dataHtml = parts.length ? '<div class="feed-data">' + parts.map(function(s){ return '<span>' + s + '</span>'; }).join('<span>\u00B7</span>') + '</div>' : '';
+    var when = formatDate(p.timestamp || p.published_at);
+    var sub  = p.airline + (p.aircraft_type ? ' \u00B7 ' + p.aircraft_type : '') + (p.registration ? ' \u00B7 ' + p.registration : '');
 
-    <div class="feed-card">
-      <div class="feed-img-placeholder">
-        <img src="photos/approach.jpg" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="feed-overlay">
-        <div class="feed-callsign">TAP072 🇵🇹 🛬</div>
-        <div class="feed-airline">TAP Air Portugal · Airbus A321neo</div>
-        <div class="feed-data"><span>160m / 525ft</span><span>·</span><span>259 km/h / 140 kts</span><span>·</span><span>89.4 dB</span></div>
-      </div>
-    </div>
+    return '<div class="feed-card">' +
+      '<div class="feed-img-placeholder">' +
+        '<img src="' + p.url + '" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.opacity='0'">' +
+      '</div>' +
+      '<div class="feed-overlay">' +
+        (when ? '<div class="feed-timestamp">' + when + '</div>' : '') +
+        '<div class="feed-callsign">' + p.callsign + ' ' + (p.airline_flag || '') + ' ' + icon + '</div>' +
+        '<div class="feed-airline">' + sub + '</div>' +
+        dataHtml +
+      '</div>' +
+    '</div>';
+  }
 
-    <div class="feed-card">
-      <div class="feed-img-placeholder">
-        <img src="photos/tap.jpg" style="width:100%;height:100%;object-fit:cover;">
-      </div>
-      <div class="feed-overlay">
-        <div class="feed-callsign">TAP1064 🇵🇹 🛫</div>
-        <div class="feed-airline">TAP Air Portugal · Embraer E190</div>
-        <div class="feed-data"><span>587m / 1925ft</span><span>·</span><span>335 km/h / 181 kts</span><span>·</span><span>69 dB</span></div>
-      </div>
-    </div>
-  </div>
+  if (GIST_ID === '943998ff407a141792bcd5d2c5f3fc36') return;
+
+  fetch('https://api.github.com/gists/' + GIST_ID)
+    .then(function(r){ return r.json(); })
+    .then(function(gist) {
+      var f = gist.files && gist.files['latest.json'];
+      if (!f || !f.raw_url) throw new Error('latest.json absent');
+      return fetch(f.raw_url);
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(photos) {
+      if (!photos || !photos.length) return;
+      var grid = document.getElementById('feed-grid');
+      if (grid) grid.innerHTML = photos.map(renderCard).join('');
+    })
+    .catch(function(e) {
+      console.warn('Lisbon Finals live feed:', e);
+    });
+})();
+</script>
 </section>
 
 <!-- STATS -->
