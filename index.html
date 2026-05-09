@@ -1744,8 +1744,8 @@ body::after {
 </section>
 
 <!-- TICKER -->
-<div class="ticker-wrap" id="ticker-section">
-  <div class="ticker" id="ticker-inner">
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
     <span class="ticker-sep">✦</span>
     <span>Loading flight data…</span>
   </div>
@@ -2217,7 +2217,7 @@ function renderBars(noiseByHour) {
 let _tickerLoaded = false;
 function renderTicker(ticker) {
   if (_tickerLoaded) return;
-  const el = document.getElementById('ticker-inner');
+  const el = document.getElementById('ticker');
   if (!el || !ticker.length) return;
   const items = [...ticker, ...ticker].map(f => {
     const ts = f.timestamp ? f.timestamp.replace('T',' ').substring(0,16) : '';
