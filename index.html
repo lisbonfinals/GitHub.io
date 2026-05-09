@@ -1233,6 +1233,235 @@ footer {
   font-weight: 400;
 }
 
+/* ── WEATHER STATION ── */
+.weather-section {
+  background: var(--dark2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 48px;
+  position: relative;
+  overflow: hidden;
+}
+.weather-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, var(--sky), transparent 60%);
+  opacity: 0.5;
+}
+.weather-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.weather-live-dot {
+  width: 5px; height: 5px;
+  background: var(--sky);
+  border-radius: 50%;
+  animation: livePulse 2s ease-in-out infinite;
+}
+.weather-title-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+.weather-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+.weather-data-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  flex-shrink: 0;
+}
+.weather-datum {
+  padding: 0 28px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.weather-datum:first-child { padding-left: 0; }
+.weather-datum:last-child { border-right: none; }
+.weather-val-row { display: flex; align-items: baseline; gap: 3px; line-height: 1; }
+.weather-big {
+  font-family: var(--mono);
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--sky);
+  line-height: 1;
+}
+.weather-unit { font-family: var(--mono); font-size: 14px; color: rgba(240,237,232,0.3); }
+.weather-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.weather-icon { font-size: 28px; line-height: 1; }
+.weather-cond-text { font-family: var(--mono); font-size: 11px; color: rgba(240,237,232,0.5); }
+.weather-runway-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 48px;
+  border-left: 1px solid var(--border);
+}
+.runway-config {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  transition: all .3s;
+}
+.runway-config.rwy-active {
+  border-color: rgba(191,216,245,0.25);
+  background: rgba(191,216,245,0.04);
+}
+.runway-config.rwy-inactive { opacity: 0.28; }
+.rwy-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .1em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 2px;
+  border: 1px solid transparent;
+}
+.rwy-title { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+.rwy-desc { font-size: 11px; color: rgba(240,237,232,0.4); line-height: 1.5; }
+
+/* ── PIPELINE FLOW ── */
+.pipeline-wrap {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.pipeline-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(240,237,232,0.22);
+  margin-bottom: 16px;
+}
+.pipeline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.pipeline-node {
+  padding: 8px 14px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .05em;
+  color: rgba(240,237,232,0.45);
+  white-space: nowrap;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 1.4;
+}
+.pipeline-node.hl {
+  border-color: rgba(245,166,35,0.3);
+  color: var(--amber);
+  background: rgba(245,166,35,0.04);
+}
+.pipeline-arrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(240,237,232,0.15);
+  padding: 0 5px;
+  flex-shrink: 0;
+}
+
+/* ── COMING SOON ── */
+.coming-section {
+  padding: 120px 48px;
+  background: var(--dark2);
+  border-top: 1px solid var(--border);
+}
+.coming-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-top: 64px;
+}
+.coming-card {
+  padding: 40px 32px;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .3s;
+}
+.coming-card:hover { border-color: rgba(245,166,35,0.25); }
+.coming-card::after {
+  content: 'SOON';
+  position: absolute;
+  top: 18px; right: 18px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .15em;
+  color: rgba(245,166,35,0.35);
+  border: 1px solid rgba(245,166,35,0.15);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+.coming-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, rgba(245,166,35,0.2), transparent);
+}
+.coming-icon { font-size: 28px; margin-bottom: 20px; display: block; }
+.coming-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; color: var(--white); }
+.coming-desc { font-size: 13px; color: rgba(240,237,232,0.4); line-height: 1.7; }
+.coming-tag {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .08em;
+  padding: 3px 8px;
+  border: 1px solid rgba(245,166,35,0.2);
+  border-radius: 2px;
+  color: rgba(245,166,35,0.5);
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .weather-section { padding: 28px 20px; }
+  .weather-body { flex-direction: column; gap: 28px; }
+  .weather-data-row { flex-wrap: wrap; gap: 20px; }
+  .weather-datum { border-right: none; padding: 0; }
+  .weather-big { font-size: 26px; }
+  .weather-runway-info { padding-left: 0; border-left: none; padding-top: 24px; border-top: 1px solid var(--border); }
+  .pipeline { gap: 2px; }
+  .coming-section { padding: 64px 20px; }
+  .coming-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .coming-grid { grid-template-columns: 1fr; }
+}
+
 /* Grain overlay */
 body::after {
   content: '';
@@ -1354,47 +1583,143 @@ body::after {
   </div>
 </div>
 
+<!-- WEATHER STATION -->
+<section class="weather-section" id="weather">
+  <div class="weather-header">
+    <div class="weather-live-dot"></div>
+    <span class="weather-title-label">LPPT · Live weather</span>
+    <span style="font-family:var(--mono);font-size:9px;color:rgba(240,237,232,0.2);margin-left:auto;" id="w-updated">—</span>
+  </div>
+  <div class="weather-body">
+    <div class="weather-data-row">
+      <div class="weather-datum">
+        <div class="weather-val-row">
+          <span class="weather-big" id="w-temp">—</span>
+          <span class="weather-unit">°C</span>
+        </div>
+        <span class="weather-lbl">Temperature</span>
+      </div>
+      <div class="weather-datum" style="align-items:center;min-width:90px;">
+        <span class="weather-icon" id="w-icon">⛅</span>
+        <span class="weather-cond-text" id="w-cond">—</span>
+        <span class="weather-lbl">Conditions</span>
+      </div>
+      <div class="weather-datum">
+        <div class="weather-val-row">
+          <span class="weather-big" id="w-wind">—</span>
+          <span class="weather-unit">km/h</span>
+        </div>
+        <span class="weather-lbl">Wind speed</span>
+      </div>
+      <div class="weather-datum" style="align-items:center;gap:10px;">
+        <svg id="w-compass-svg" width="52" height="52" viewBox="0 0 52 52">
+          <circle cx="26" cy="26" r="24" fill="none" stroke="rgba(191,216,245,0.1)" stroke-width="1"/>
+          <circle cx="26" cy="26" r="14" fill="none" stroke="rgba(191,216,245,0.05)" stroke-width="1"/>
+          <text x="26" y="7"  text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.65)">N</text>
+          <text x="26" y="48" text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.3)">S</text>
+          <text x="47" y="29" text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.3)">E</text>
+          <text x="5"  y="29" text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.3)">W</text>
+          <line id="w-compass-line" x1="26" y1="26" x2="26" y2="8" stroke="var(--sky)" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+          <circle cx="26" cy="26" r="3" fill="var(--sky)" opacity="0.6"/>
+        </svg>
+        <div>
+          <div class="weather-val-row">
+            <span class="weather-big" style="font-size:22px;" id="w-dir-deg">—</span>
+            <span class="weather-unit" style="font-size:12px;">°</span>
+          </div>
+          <span class="weather-lbl" id="w-dir-lbl">Wind direction</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="weather-runway-info">
+      <div class="runway-config" id="rwy-landing">
+        <span class="rwy-badge" style="background:rgba(191,216,245,0.08);border-color:rgba(191,216,245,0.2);color:var(--sky);">↑ N wind</span>
+        <div>
+          <div class="rwy-title">🛬 Landing overhead</div>
+          <div class="rwy-desc">North wind → aircraft on final approach RWY 03 arrive from the south — passing directly over the terrace at 180–250 m, at full landing power.</div>
+        </div>
+      </div>
+      <div class="runway-config" id="rwy-takeoff">
+        <span class="rwy-badge" style="background:rgba(245,166,35,0.08);border-color:rgba(245,166,35,0.2);color:var(--amber);">↙ SSW wind</span>
+        <div>
+          <div class="rwy-title">🛫 Takeoff overhead</div>
+          <div class="rwy-desc">South-southwest wind → aircraft depart RWY 03, climbing steeply over the terrace at maximum thrust. Peak noise events.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
   <div class="section-label">The system</div>
   <h2 class="section-title reveal">Automated from<br><em>detection to post</em></h2>
-  <p class="section-sub reveal">Three layers of technology working in real time, 24 hours a day, from a residential terrace in Lisbon directly under the final approach path.</p>
+  <p class="section-sub reveal">Six autonomous layers — from raw radio signals to 4K Instagram posts. No human in the loop. Real-time ADS-B decoding, AI vision scoring, neural upscaling and intelligent scheduling — all running 24/7 on a Raspberry Pi 4 under the Lisbon sky.</p>
 
   <div class="steps">
     <div class="step reveal">
       <span class="step-num">01</span>
       <span class="step-icon">📡</span>
-      <div class="step-title">Detect</div>
-      <p class="step-desc">ADS-B transponder data is received in real time — altitude, speed, heading, callsign, airline. Cross-referenced with acoustic sensors measuring noise levels in dB SPL.</p>
+      <div class="step-title">Detect & Measure</div>
+      <p class="step-desc">A RTL-SDR dongle decodes ADS-B transponder signals at 1090 MHz — capturing callsign, altitude, speed, heading and ICAO code for every aircraft within 5 km and below 5,000 ft. Simultaneously, a USB condenser microphone monitors ambient noise in dB SPL. Only when both conditions are met — aircraft in zone and noise above threshold — does the system trigger.</p>
       <div class="step-tech">
         <span class="tech-tag">RTL-SDR</span>
-        <span class="tech-tag">ADS-B</span>
-        <span class="tech-tag">dump1090</span>
-        <span class="tech-tag">dB meter</span>
+        <span class="tech-tag">ADS-B 1090 MHz</span>
+        <span class="tech-tag">readsb</span>
+        <span class="tech-tag">dB SPL</span>
+        <span class="tech-tag">5 km · 5,000 ft</span>
       </div>
     </div>
     <div class="step reveal" style="transition-delay:.1s">
       <span class="step-num">02</span>
       <span class="step-icon">👁</span>
-      <div class="step-title">Capture</div>
-      <p class="step-desc">A 4K dual-lens camera locks onto the aircraft. YOLO neural network validates the frame quality. Claude AI analyzes the image and generates the caption — aircraft type, livery, context.</p>
+      <div class="step-title">Capture & Score</div>
+      <p class="step-desc">A 4K dual-lens camera streams via RTSP. Every captured frame is scored by a YOLO v8 neural network — only frames exceeding 0.30 confidence are selected. The best frame then goes to Claude Haiku, which analyzes livery, aircraft type, registration, route context and atmospheric conditions to generate a natural-language caption.</p>
       <div class="step-tech">
         <span class="tech-tag">Reolink 4K</span>
-        <span class="tech-tag">YOLO v8</span>
         <span class="tech-tag">RTSP</span>
-        <span class="tech-tag">Claude AI</span>
+        <span class="tech-tag">YOLO v8</span>
+        <span class="tech-tag">Claude Haiku</span>
+        <span class="tech-tag">0.30 threshold</span>
       </div>
     </div>
     <div class="step reveal" style="transition-delay:.2s">
       <span class="step-num">03</span>
       <span class="step-icon">✦</span>
-      <div class="step-title">Publish</div>
-      <p class="step-desc">The best frame is automatically published to Instagram with a complete caption — callsign, airline, altitude, speed, noise level. Zero human intervention required.</p>
+      <div class="step-title">Enhance & Publish</div>
+      <p class="step-desc">The selected photo is upscaled 4× to near-4K resolution using Real-ESRGAN ONNX (SRVGGNetCompact), running on the Pi CPU — approximately 15 minutes per photo. It is then queued with a calculated publication slot, respecting night silence windows (23h–7h) and daily post quotas. Published autonomously to @lisbon.finals via the Instagram Graph API with the full Haiku-generated caption and ADS-B data.</p>
       <div class="step-tech">
-        <span class="tech-tag">Raspberry Pi 4</span>
+        <span class="tech-tag">Real-ESRGAN ×4</span>
+        <span class="tech-tag">ONNX Runtime</span>
         <span class="tech-tag">Cloudinary</span>
         <span class="tech-tag">Meta Graph API</span>
+        <span class="tech-tag">Raspberry Pi 4</span>
       </div>
+    </div>
+  </div>
+
+  <!-- Pipeline flow -->
+  <div class="pipeline-wrap reveal">
+    <div class="pipeline-label">Full automation pipeline · end to end · zero human trigger</div>
+    <div class="pipeline">
+      <div class="pipeline-node hl">RTL-SDR<br>1090 MHz</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node">ADS-B<br>decode</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node">Acoustic<br>trigger</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node hl">RTSP<br>capture</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node hl">YOLO v8<br>scoring</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node">Telegram<br>validation</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node hl">Real-ESRGAN<br>4K upscale</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node">Haiku<br>caption</div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-node hl">Instagram<br>Graph API</div>
     </div>
   </div>
 </section>
@@ -1487,8 +1812,14 @@ body::after {
     .then(function(r){ return r.json(); })
     .then(function(photos) {
       if (!photos || !photos.length) return;
+      // Filter out daily stats posts — keep only real aircraft photos (must have callsign + flight data)
+      var planePhotos = photos.filter(function(p) {
+        return p.callsign && p.callsign.trim() !== '' &&
+               (p.altitude_m != null || p.altitude_ft != null);
+      });
+      var toRender = planePhotos.length ? planePhotos : photos;
       var grid = document.getElementById('feed-grid');
-      if (grid) grid.innerHTML = photos.map(renderCard).join('');
+      if (grid) grid.innerHTML = toRender.map(renderCard).join('');
     })
     .catch(function(e) {
       console.warn('Lisbon Finals live feed:', e);
@@ -1687,6 +2018,40 @@ body::after {
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-section" id="coming">
+  <div class="section-label">What's next</div>
+  <h2 class="section-title reveal">Upgrades <em>in progress</em></h2>
+  <p class="section-sub reveal">The station is continuously evolving. New hardware and sensors are being integrated to capture even more — from vibration analysis and industrial-grade acoustics to live ATC communications and air quality monitoring.</p>
+
+  <div class="coming-grid">
+    <div class="coming-card reveal">
+      <span class="coming-icon">🔊</span>
+      <div class="coming-title">130 dB Sound Sensor</div>
+      <p class="coming-desc">A calibrated GAIN EXPRESS industrial sound meter connected via USB serial, replacing the current condenser microphone. Accurate measurements up to 130 dB SPL — no more sensor saturation during the loudest events. Real data, real numbers.</p>
+      <span class="coming-tag">Hardware · Ordered</span>
+    </div>
+    <div class="coming-card reveal" style="transition-delay:.08s">
+      <span class="coming-icon">🌀</span>
+      <div class="coming-title">Dual IMU Vibration</div>
+      <p class="coming-desc">Two MPU-6050 accelerometers on a GTIWUNG breadboard (I²C addresses 0x68 + 0x69) will measure structural vibration and infrasound from passing aircraft — a data layer entirely invisible to acoustic sensors. Useful for low-frequency impact analysis.</p>
+      <span class="coming-tag">Hardware · I²C</span>
+    </div>
+    <div class="coming-card reveal" style="transition-delay:.16s">
+      <span class="coming-icon">🌬</span>
+      <div class="coming-title">Air Quality Station</div>
+      <p class="coming-desc">PMS5003 (PM2.5 / PM10 fine particles) and SGP30 (VOC / CO₂ equivalent) sensors will correlate aviation kerosene exhaust with particle counts over the terrace — a first for residential aviation monitoring in Lisbon.</p>
+      <span class="coming-tag">Environmental · SGP30 · PMS5003</span>
+    </div>
+    <div class="coming-card reveal" style="transition-delay:.24s">
+      <span class="coming-icon">📡</span>
+      <div class="coming-title">Live ATC Listening</div>
+      <p class="coming-desc">A second RTL-SDR dongle tuned to 118.1 MHz (LPPT tower frequency) will capture live air traffic control communications — matching callsigns in real time with clearances, landing instructions, and go-around orders.</p>
+      <span class="coming-tag">RTL-SDR · 118.1 MHz</span>
     </div>
   </div>
 </section>
@@ -2019,6 +2384,90 @@ async function loadLiveData() {
 }
 
 setTimeout(loadLiveData, 300);
+</script>
+
+<script>
+// ── WEATHER STATION ──────────────────────────────────────────────────────────
+(function() {
+  var LAT = 38.7813, LON = -9.1359;
+
+  var WMO_ICON = {
+    0:'☀️', 1:'🌤', 2:'⛅', 3:'☁️',
+    45:'🌫', 48:'🌫',
+    51:'🌦', 53:'🌦', 55:'🌧',
+    61:'🌧', 63:'🌧', 65:'🌧',
+    71:'🌨', 73:'🌨', 75:'🌨',
+    80:'🌦', 81:'🌧', 82:'⛈',
+    95:'⛈', 96:'⛈', 99:'⛈'
+  };
+  var WMO_DESC = {
+    0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+    45:'Foggy', 48:'Foggy',
+    51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle',
+    61:'Light rain', 63:'Rain', 65:'Heavy rain',
+    71:'Light snow', 73:'Snow', 75:'Heavy snow',
+    80:'Showers', 81:'Rain showers', 82:'Heavy showers',
+    95:'Thunderstorm', 96:'Thunderstorm', 99:'Thunderstorm'
+  };
+
+  function cardinal(deg) {
+    var d = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+    return d[Math.round(deg / 22.5) % 16];
+  }
+
+  function updateCompass(deg) {
+    var line = document.getElementById('w-compass-line');
+    if (!line) return;
+    var r = 18, cx = 26, cy = 26;
+    var rad = deg * Math.PI / 180;
+    // Arrow points toward where wind comes FROM
+    line.setAttribute('x2', (cx + r * Math.sin(rad)).toFixed(1));
+    line.setAttribute('y2', (cy - r * Math.cos(rad)).toFixed(1));
+  }
+
+  function updateRunway(deg) {
+    var landing = document.getElementById('rwy-landing'); // N wind  → landing RWY 03
+    var takeoff = document.getElementById('rwy-takeoff'); // SSW wind → takeoff RWY 03
+    if (!landing || !takeoff) return;
+    var isNorth = (deg >= 330 || deg < 70);  // wind from north sector
+    var isSSW   = (deg >= 150 && deg < 260); // wind from south/SW sector
+    landing.className = 'runway-config ' + (isNorth ? 'rwy-active' : 'rwy-inactive');
+    takeoff.className = 'runway-config ' + (isSSW   ? 'rwy-active' : 'rwy-inactive');
+  }
+
+  function set(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+
+  function fetchWeather() {
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON
+      + '&current=temperature_2m,wind_speed_10m,wind_direction_10m,weather_code'
+      + '&wind_speed_unit=kmh&timezone=Europe/Lisbon')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var c   = d.current;
+        var temp = Math.round(c.temperature_2m);
+        var wind = Math.round(c.wind_speed_10m);
+        var dir  = Math.round(c.wind_direction_10m);
+        var code = c.weather_code;
+
+        set('w-temp',    temp);
+        set('w-wind',    wind);
+        set('w-dir-deg', dir);
+        set('w-dir-lbl', 'From ' + cardinal(dir));
+        set('w-icon',    WMO_ICON[code] || '🌤');
+        set('w-cond',    WMO_DESC[code] || '');
+
+        var now = new Date();
+        set('w-updated', 'Updated ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}));
+
+        updateCompass(dir);
+        updateRunway(dir);
+      })
+      .catch(function() {});
+  }
+
+  fetchWeather();
+  setInterval(fetchWeather, 600000); // refresh every 10 min
+})();
 </script>
 </body>
 </html>
