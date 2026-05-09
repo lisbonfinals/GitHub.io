@@ -1235,26 +1235,16 @@ footer {
 
 /* ── WEATHER STATION ── */
 .weather-section {
-  background: var(--dark2);
+  padding: 120px 48px;
+  background: var(--black);
   border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 32px 48px;
   position: relative;
-  overflow: hidden;
 }
-.weather-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(to right, var(--sky), transparent 60%);
-  opacity: 0.5;
-}
-.weather-header {
-  display: flex;
+.weather-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 24px;
 }
 .weather-live-dot {
   width: 5px; height: 5px;
@@ -1269,79 +1259,114 @@ footer {
   text-transform: uppercase;
   color: var(--sky);
 }
-.weather-body {
-  display: flex;
-  align-items: flex-start;
-  gap: 48px;
-}
-.weather-data-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0;
-  flex-shrink: 0;
-}
-.weather-datum {
-  padding: 0 28px;
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.weather-datum:first-child { padding-left: 0; }
-.weather-datum:last-child { border-right: none; }
-.weather-val-row { display: flex; align-items: baseline; gap: 3px; line-height: 1; }
-.weather-big {
-  font-family: var(--mono);
-  font-size: 36px;
-  font-weight: 500;
-  color: var(--sky);
-  line-height: 1;
-}
-.weather-unit { font-family: var(--mono); font-size: 14px; color: rgba(240,237,232,0.3); }
-.weather-lbl {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--gray);
-}
-.weather-icon { font-size: 28px; line-height: 1; }
-.weather-cond-text { font-family: var(--mono); font-size: 11px; color: rgba(240,237,232,0.5); }
-.weather-runway-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-left: 48px;
-  border-left: 1px solid var(--border);
-}
 .runway-config {
   display: flex;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 14px;
+  padding: 14px 18px;
   border: 1px solid transparent;
   border-radius: 3px;
-  transition: all .3s;
+  transition: all .35s;
 }
 .runway-config.rwy-active {
   border-color: rgba(191,216,245,0.25);
   background: rgba(191,216,245,0.04);
+}
+.runway-config.rwy-active .rwy-badge {
+  border-color: rgba(191,216,245,0.4);
+  color: var(--sky);
 }
 .runway-config.rwy-inactive { opacity: 0.28; }
 .rwy-badge {
   font-family: var(--mono);
   font-size: 9px;
   letter-spacing: .1em;
-  padding: 3px 8px;
+  padding: 4px 9px;
   border-radius: 2px;
   text-transform: uppercase;
+  color: var(--gray);
   flex-shrink: 0;
   align-self: flex-start;
-  margin-top: 2px;
-  border: 1px solid transparent;
+  margin-top: 3px;
+  border: 1px solid var(--border);
 }
-.rwy-title { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
-.rwy-desc { font-size: 11px; color: rgba(240,237,232,0.4); line-height: 1.5; }
+.rwy-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.rwy-desc { font-size: 12px; color: rgba(240,237,232,0.4); line-height: 1.65; }
+
+/* Weather data panel */
+.weather-data-panel {
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 36px;
+  position: relative;
+}
+.weather-data-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--sky), transparent 70%);
+  opacity: 0.45;
+  border-radius: 4px 4px 0 0;
+}
+.weather-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.weather-main-display {
+  display: flex;
+  align-items: flex-end;
+  gap: 28px;
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+.weather-temp-area { display: flex; align-items: baseline; gap: 4px; line-height: 1; }
+.weather-temp-big {
+  font-family: var(--mono);
+  font-size: 96px;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -.03em;
+}
+.weather-temp-unit { font-family: var(--mono); font-size: 36px; color: rgba(240,237,232,0.25); line-height: 1; }
+.weather-condition-area { display: flex; flex-direction: column; gap: 8px; padding-bottom: 8px; }
+.weather-cond-icon { font-size: 38px; line-height: 1; }
+.weather-cond-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  white-space: nowrap;
+}
+.weather-wind-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.weather-wind-block { display: flex; flex-direction: column; gap: 8px; }
+.weather-wind-val { display: flex; align-items: baseline; gap: 5px; }
+.weather-wind-big {
+  font-family: var(--mono);
+  font-size: 52px;
+  font-weight: 300;
+  color: var(--sky);
+  line-height: 1;
+}
+.weather-wind-unit { font-family: var(--mono); font-size: 20px; color: rgba(240,237,232,0.25); }
+.weather-wind-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.weather-compass-block { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
 /* ── PIPELINE FLOW ── */
 .pipeline-wrap {
@@ -1448,12 +1473,10 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .weather-section { padding: 28px 20px; }
-  .weather-body { flex-direction: column; gap: 28px; }
-  .weather-data-row { flex-wrap: wrap; gap: 20px; }
-  .weather-datum { border-right: none; padding: 0; }
-  .weather-big { font-size: 26px; }
-  .weather-runway-info { padding-left: 0; border-left: none; padding-top: 24px; border-top: 1px solid var(--border); }
+  .weather-section { padding: 64px 20px; }
+  .weather-grid { grid-template-columns: 1fr; gap: 40px; }
+  .weather-temp-big { font-size: 64px; }
+  .weather-wind-big { font-size: 36px; }
   .pipeline { gap: 2px; }
   .coming-section { padding: 64px 20px; }
   .coming-grid { grid-template-columns: 1fr 1fr; }
@@ -1567,89 +1590,6 @@ body::after {
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner" id="ticker">
-    <div class="ticker-item">TAP28 <span>🇵🇹 TAP Air Portugal</span> <span class="ticker-sep">·</span> A330-900neo <span class="ticker-sep">·</span> 183m <span class="ticker-sep">·</span> 253 km/h</div>
-    <div class="ticker-item">RYR3421 <span>🇮🇪 Ryanair</span> <span class="ticker-sep">·</span> Boeing 737-800 <span class="ticker-sep">·</span> 244m <span class="ticker-sep">·</span> 289 km/h</div>
-    <div class="ticker-item">DAL272 <span>🇺🇸 Delta</span> <span class="ticker-sep">·</span> Boeing 767-300 <span class="ticker-sep">·</span> 274m <span class="ticker-sep">·</span> 98.6 dB SPL</div>
-    <div class="ticker-item">EZY35AB <span>🇬🇧 easyJet</span> <span class="ticker-sep">·</span> Airbus A320 <span class="ticker-sep">·</span> 320m <span class="ticker-sep">·</span> 91 dB SPL</div>
-    <div class="ticker-item">ACA813 <span>🇨🇦 Air Canada</span> <span class="ticker-sep">·</span> A330-300 <span class="ticker-sep">·</span> 587m <span class="ticker-sep">·</span> 92 dB SPL</div>
-    <div class="ticker-item">TAP28 <span>🇵🇹 TAP Air Portugal</span> <span class="ticker-sep">·</span> A330-900neo <span class="ticker-sep">·</span> 183m <span class="ticker-sep">·</span> 253 km/h</div>
-    <div class="ticker-item">RYR3421 <span>🇮🇪 Ryanair</span> <span class="ticker-sep">·</span> Boeing 737-800 <span class="ticker-sep">·</span> 244m <span class="ticker-sep">·</span> 289 km/h</div>
-    <div class="ticker-item">DAL272 <span>🇺🇸 Delta</span> <span class="ticker-sep">·</span> Boeing 767-300 <span class="ticker-sep">·</span> 274m <span class="ticker-sep">·</span> 98.6 dB SPL</div>
-    <div class="ticker-item">EZY35AB <span>🇬🇧 easyJet</span> <span class="ticker-sep">·</span> Airbus A320 <span class="ticker-sep">·</span> 320m <span class="ticker-sep">·</span> 91 dB SPL</div>
-    <div class="ticker-item">ACA813 <span>🇨🇦 Air Canada</span> <span class="ticker-sep">·</span> A330-300 <span class="ticker-sep">·</span> 587m <span class="ticker-sep">·</span> 92 dB SPL</div>
-  </div>
-</div>
-
-<!-- WEATHER STATION -->
-<section class="weather-section" id="weather">
-  <div class="weather-header">
-    <div class="weather-live-dot"></div>
-    <span class="weather-title-label">LPPT · Live weather</span>
-    <span style="font-family:var(--mono);font-size:9px;color:rgba(240,237,232,0.2);margin-left:auto;" id="w-updated">—</span>
-  </div>
-  <div class="weather-body">
-    <div class="weather-data-row">
-      <div class="weather-datum">
-        <div class="weather-val-row">
-          <span class="weather-big" id="w-temp">—</span>
-          <span class="weather-unit">°C</span>
-        </div>
-        <span class="weather-lbl">Temperature</span>
-      </div>
-      <div class="weather-datum" style="align-items:center;min-width:90px;">
-        <span class="weather-icon" id="w-icon">⛅</span>
-        <span class="weather-cond-text" id="w-cond">—</span>
-        <span class="weather-lbl">Conditions</span>
-      </div>
-      <div class="weather-datum">
-        <div class="weather-val-row">
-          <span class="weather-big" id="w-wind">—</span>
-          <span class="weather-unit">km/h</span>
-        </div>
-        <span class="weather-lbl">Wind speed</span>
-      </div>
-      <div class="weather-datum" style="align-items:center;gap:10px;">
-        <svg id="w-compass-svg" width="52" height="52" viewBox="0 0 52 52">
-          <circle cx="26" cy="26" r="24" fill="none" stroke="rgba(191,216,245,0.1)" stroke-width="1"/>
-          <circle cx="26" cy="26" r="14" fill="none" stroke="rgba(191,216,245,0.05)" stroke-width="1"/>
-          <text x="26" y="7"  text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.65)">N</text>
-          <text x="26" y="48" text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.3)">S</text>
-          <text x="47" y="29" text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.3)">E</text>
-          <text x="5"  y="29" text-anchor="middle" font-family="monospace" font-size="6.5" fill="rgba(191,216,245,0.3)">W</text>
-          <line id="w-compass-line" x1="26" y1="26" x2="26" y2="8" stroke="var(--sky)" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
-          <circle cx="26" cy="26" r="3" fill="var(--sky)" opacity="0.6"/>
-        </svg>
-        <div>
-          <div class="weather-val-row">
-            <span class="weather-big" style="font-size:22px;" id="w-dir-deg">—</span>
-            <span class="weather-unit" style="font-size:12px;">°</span>
-          </div>
-          <span class="weather-lbl" id="w-dir-lbl">Wind direction</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="weather-runway-info">
-      <div class="runway-config" id="rwy-landing">
-        <span class="rwy-badge" style="background:rgba(191,216,245,0.08);border-color:rgba(191,216,245,0.2);color:var(--sky);">↑ N wind</span>
-        <div>
-          <div class="rwy-title">🛬 Landing overhead</div>
-          <div class="rwy-desc">North wind → aircraft on final approach RWY 03 arrive from the south — passing directly over the terrace at 180–250 m, at full landing power.</div>
-        </div>
-      </div>
-      <div class="runway-config" id="rwy-takeoff">
-        <span class="rwy-badge" style="background:rgba(245,166,35,0.08);border-color:rgba(245,166,35,0.2);color:var(--amber);">↙ SSW wind</span>
-        <div>
-          <div class="rwy-title">🛫 Takeoff overhead</div>
-          <div class="rwy-desc">South-southwest wind → aircraft depart RWY 03, climbing steeply over the terrace at maximum thrust. Peak noise events.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
@@ -1723,6 +1663,93 @@ body::after {
     </div>
   </div>
 </section>
+
+<!-- WEATHER STATION -->
+<section class="weather-section" id="weather">
+  <div class="weather-grid">
+
+    <!-- LEFT: context + runway cards -->
+    <div class="weather-left reveal">
+      <div class="section-label">Atmospheric conditions</div>
+      <h2 class="section-title">The wind<br><em>decides everything</em></h2>
+      <p style="color:var(--gray);font-size:0.95rem;line-height:1.75;margin-bottom:48px;max-width:460px;">
+        Lisbon Airport (LPPT) sits on the north bank of the Tejo estuary. Runway orientation is fixed — aircraft direction changes with the prevailing wind. A north wind pushes traffic over the city centre; a south-southwest wind brings it straight over my terrace.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <!-- RWY 03 card (N wind → landing from north) -->
+        <div class="runway-config rwy-inactive" id="rwy-landing">
+          <div class="rwy-badge">RWY 03</div>
+          <div>
+            <div class="rwy-title">North wind — city approach</div>
+            <div class="rwy-desc">Aircraft cross Lisbon, land heading north-northeast. Less terrace visibility.</div>
+          </div>
+        </div>
+        <!-- RWY 21 card (SSW wind → takeoff/approach from south) -->
+        <div class="runway-config rwy-inactive" id="rwy-takeoff">
+          <div class="rwy-badge">RWY 21</div>
+          <div>
+            <div class="rwy-title">South wind — terrace window ✦</div>
+            <div class="rwy-desc">Aircraft approach from the north over the Tejo, directly overhead — optimal shot conditions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: live weather data panel -->
+    <div class="weather-data-panel reveal">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="live-dot" style="width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;"></span>
+          <span style="font-family:var(--mono);font-size:0.72rem;color:var(--gray);letter-spacing:0.12em;text-transform:uppercase;">LPPT · Live weather</span>
+        </div>
+        <span id="w-time" style="font-family:var(--mono);font-size:0.68rem;color:var(--gray2);">—</span>
+      </div>
+
+      <!-- Temperature -->
+      <div style="margin-bottom:36px;">
+        <div style="font-family:var(--mono);font-size:0.68rem;color:var(--gray);letter-spacing:0.1em;margin-bottom:6px;">TEMPERATURE</div>
+        <div class="weather-temp-big"><span id="w-temp">—</span><span style="font-size:0.45em;vertical-align:top;margin-top:0.25em;display:inline-block;"> °C</span></div>
+      </div>
+
+      <!-- Condition -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px;">
+        <span id="w-icon" style="font-size:2rem;">—</span>
+        <span id="w-cond" style="font-family:var(--mono);font-size:0.85rem;color:var(--white);letter-spacing:0.05em;">—</span>
+      </div>
+
+      <!-- Wind -->
+      <div style="font-family:var(--mono);font-size:0.68rem;color:var(--gray);letter-spacing:0.1em;margin-bottom:10px;">WIND</div>
+      <div style="display:flex;align-items:center;gap:28px;margin-bottom:12px;">
+        <div class="weather-wind-big"><span id="w-wspd">—</span><span style="font-size:0.4em;color:var(--gray);margin-left:6px;">km/h</span></div>
+        <div class="weather-compass-block">
+          <svg width="72" height="72" viewBox="0 0 72 72">
+            <circle cx="36" cy="36" r="30" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
+            <circle cx="36" cy="36" r="4" fill="var(--amber)" opacity="0.9"/>
+            <line id="w-compass-line" x1="36" y1="36" x2="36" y2="11" stroke="var(--sky)" stroke-width="2" stroke-linecap="round"/>
+            <text x="36" y="8" text-anchor="middle" fill="var(--gray)" font-size="7" font-family="JetBrains Mono,monospace">N</text>
+            <text x="36" y="68" text-anchor="middle" fill="var(--gray)" font-size="7" font-family="JetBrains Mono,monospace">S</text>
+            <text x="8" y="39" text-anchor="middle" fill="var(--gray)" font-size="7" font-family="JetBrains Mono,monospace">W</text>
+            <text x="64" y="39" text-anchor="middle" fill="var(--gray)" font-size="7" font-family="JetBrains Mono,monospace">E</text>
+          </svg>
+          <div id="w-wdir-label" style="font-family:var(--mono);font-size:0.72rem;color:var(--gray);text-align:center;margin-top:4px;">—°</div>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:0.65rem;color:var(--gray2);margin-top:24px;">
+        Source: Open-Meteo · LPPT (38.78°N, 9.14°W) · Updates every 5 min
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap" id="ticker-section">
+  <div class="ticker" id="ticker-inner">
+    <span class="ticker-sep">✦</span>
+    <span>Loading flight data…</span>
+  </div>
+</div>
 
 <!-- LIVE FEED -->
 <section class="live-feed-section" id="feed">
@@ -2418,7 +2445,7 @@ setTimeout(loadLiveData, 300);
   function updateCompass(deg) {
     var line = document.getElementById('w-compass-line');
     if (!line) return;
-    var r = 18, cx = 26, cy = 26;
+    var r = 25, cx = 36, cy = 36;
     var rad = deg * Math.PI / 180;
     // Arrow points toward where wind comes FROM
     line.setAttribute('x2', (cx + r * Math.sin(rad)).toFixed(1));
@@ -2449,15 +2476,14 @@ setTimeout(loadLiveData, 300);
         var dir  = Math.round(c.wind_direction_10m);
         var code = c.weather_code;
 
-        set('w-temp',    temp);
-        set('w-wind',    wind);
-        set('w-dir-deg', dir);
-        set('w-dir-lbl', 'From ' + cardinal(dir));
-        set('w-icon',    WMO_ICON[code] || '🌤');
-        set('w-cond',    WMO_DESC[code] || '');
+        set('w-temp',       temp);
+        set('w-wspd',       wind);
+        set('w-wdir-label', dir + '° ' + cardinal(dir));
+        set('w-icon',       WMO_ICON[code] || '🌤');
+        set('w-cond',       WMO_DESC[code] || '');
 
         var now = new Date();
-        set('w-updated', 'Updated ' + now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}));
+        set('w-time', now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}));
 
         updateCompass(dir);
         updateRunway(dir);
