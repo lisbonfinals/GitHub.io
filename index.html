@@ -1681,16 +1681,16 @@ body::after {
         <div class="runway-config rwy-inactive" id="rwy-landing">
           <div class="rwy-badge">RWY 03</div>
           <div>
-            <div class="rwy-title">North wind — city approach</div>
-            <div class="rwy-desc">Aircraft cross Lisbon, land heading north-northeast. Less terrace visibility.</div>
+            <div class="rwy-title">North wind — landing over the terrace ✦</div>
+            <div class="rwy-desc">Planes approach from the south and land over my terrace. Close, slow, full-frame — most impactful shots.</div>
           </div>
         </div>
         <!-- RWY 21 card (SSW wind → takeoff/approach from south) -->
         <div class="runway-config rwy-inactive" id="rwy-takeoff">
           <div class="rwy-badge">RWY 21</div>
           <div>
-            <div class="rwy-title">South wind — terrace window ✦</div>
-            <div class="rwy-desc">Aircraft approach from the north over the Tejo, directly overhead — optimal shot conditions.</div>
+            <div class="rwy-title">South wind — takeoff over the terrace</div>
+            <div class="rwy-desc">Planes take off and climb over my terrace heading north. Higher, faster — less impactful shots.</div>
           </div>
         </div>
       </div>
@@ -2217,7 +2217,7 @@ function renderBars(noiseByHour) {
 let _tickerLoaded = false;
 function renderTicker(ticker) {
   if (_tickerLoaded) return;
-  const el = document.getElementById('ticker');
+  const el = document.getElementById('ticker-inner');
   if (!el || !ticker.length) return;
   const items = [...ticker, ...ticker].map(f => {
     const ts = f.timestamp ? f.timestamp.replace('T',' ').substring(0,16) : '';
