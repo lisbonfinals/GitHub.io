@@ -1602,7 +1602,7 @@ body::after {
       <span class="step-num">01</span>
       <span class="step-icon">📡</span>
       <div class="step-title">Detect & Measure</div>
-      <p class="step-desc">A RTL-SDR dongle decodes ADS-B transponder signals at 1090 MHz — capturing callsign, altitude, speed, heading and ICAO code for every aircraft within 5 km and below 5,000 ft. Simultaneously, a USB condenser microphone monitors ambient noise in dB SPL. Only when both conditions are met — aircraft in zone and noise above threshold — does the system trigger.</p>
+      <p class="step-desc">A small radio receiver picks up the signals every commercial aircraft is required to broadcast — giving us the flight number, altitude, speed and exact position in real time. A microphone simultaneously measures the noise level on the terrace. The system only triggers when both conditions are true: a plane is close enough, and loud enough.</p>
       <div class="step-tech">
         <span class="tech-tag">RTL-SDR</span>
         <span class="tech-tag">ADS-B 1090 MHz</span>
@@ -1615,7 +1615,7 @@ body::after {
       <span class="step-num">02</span>
       <span class="step-icon">👁</span>
       <div class="step-title">Capture & Score</div>
-      <p class="step-desc">A 4K dual-lens camera streams via RTSP. Every captured frame is scored by a YOLO v8 neural network — only frames exceeding 0.30 confidence are selected. The best frame then goes to Claude Haiku, which analyzes livery, aircraft type, registration, route context and atmospheric conditions to generate a natural-language caption.</p>
+      <p class="step-desc">A 4K camera continuously streams footage of the approach path. Every frame is instantly rated by an intelligent scoring system — only shots where a plane is clearly and sharply visible make the cut. The best frame is then paired with live flight data and sent to an AI to write the caption.</p>
       <div class="step-tech">
         <span class="tech-tag">Reolink 4K</span>
         <span class="tech-tag">RTSP</span>
@@ -1628,7 +1628,7 @@ body::after {
       <span class="step-num">03</span>
       <span class="step-icon">✦</span>
       <div class="step-title">Enhance & Publish</div>
-      <p class="step-desc">The selected photo is upscaled 4× to near-4K resolution using Real-ESRGAN ONNX (SRVGGNetCompact), running on the Pi CPU — approximately 15 minutes per photo. It is then queued with a calculated publication slot, respecting night silence windows (23h–7h) and daily post quotas. Published autonomously to @lisbon.finals via the Instagram Graph API with the full Haiku-generated caption and ADS-B data.</p>
+      <p class="step-desc">The chosen photo is processed by an AI image enhancer that reconstructs fine detail at 4× the original resolution — about 15 minutes on the station's small onboard computer. It is then automatically scheduled, avoiding quiet hours at night (11pm–7am). Everything goes live on @lisbon.finals with the AI-written caption and flight data — no human involved.</p>
       <div class="step-tech">
         <span class="tech-tag">Real-ESRGAN ×4</span>
         <span class="tech-tag">ONNX Runtime</span>
@@ -1887,6 +1887,10 @@ body::after {
       <div class="stat-sub">Since May 3, 2026</div>
     </div>
   </div>
+
+  <p class="reveal" style="font-family:var(--mono);font-size:10px;color:rgba(240,237,232,0.2);letter-spacing:.07em;text-align:center;margin-top:36px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.8;text-transform:uppercase;">
+    Depending on wind direction, this station captures either landing approaches or takeoffs — whichever phase passes over the terrace. One phase at a time. These figures reflect observed traffic, not total airport volume.
+  </p>
 </section>
 
 <!-- NOISE DATA -->
@@ -2059,25 +2063,25 @@ body::after {
     <div class="coming-card reveal">
       <span class="coming-icon">🔊</span>
       <div class="coming-title">130 dB Sound Sensor</div>
-      <p class="coming-desc">A calibrated GAIN EXPRESS industrial sound meter connected via USB serial, replacing the current condenser microphone. Accurate measurements up to 130 dB SPL — no more sensor saturation during the loudest events. Real data, real numbers.</p>
+      <p class="coming-desc">An industrial-grade sound meter will replace the current microphone. The new sensor handles up to 130 dB without maxing out — capturing the full impact of a low-flying aircraft as real numbers, not just a ceiling.</p>
       <span class="coming-tag">Hardware · Ordered</span>
     </div>
     <div class="coming-card reveal" style="transition-delay:.08s">
       <span class="coming-icon">🌀</span>
       <div class="coming-title">Dual IMU Vibration</div>
-      <p class="coming-desc">Two MPU-6050 accelerometers on a GTIWUNG breadboard (I²C addresses 0x68 + 0x69) will measure structural vibration and infrasound from passing aircraft — a data layer entirely invisible to acoustic sensors. Useful for low-frequency impact analysis.</p>
+      <p class="coming-desc">Two motion sensors mounted on the terrace will detect the physical vibration caused by passing aircraft — the kind you feel in your chest but a microphone can't fully capture. A new dimension of impact, beyond sound.</p>
       <span class="coming-tag">Hardware · I²C</span>
     </div>
     <div class="coming-card reveal" style="transition-delay:.16s">
       <span class="coming-icon">🌬</span>
       <div class="coming-title">Air Quality Station</div>
-      <p class="coming-desc">PMS5003 (PM2.5 / PM10 fine particles) and SGP30 (VOC / CO₂ equivalent) sensors will correlate aviation kerosene exhaust with particle counts over the terrace — a first for residential aviation monitoring in Lisbon.</p>
+      <p class="coming-desc">Two environmental sensors will measure fine particles and air pollutants over the terrace in real time — correlating each aircraft passage with a concrete air quality reading. A first for a private monitoring station in Lisbon.</p>
       <span class="coming-tag">Environmental · SGP30 · PMS5003</span>
     </div>
     <div class="coming-card reveal" style="transition-delay:.24s">
       <span class="coming-icon">📡</span>
       <div class="coming-title">Live ATC Listening</div>
-      <p class="coming-desc">A second RTL-SDR dongle tuned to 118.1 MHz (LPPT tower frequency) will capture live air traffic control communications — matching callsigns in real time with clearances, landing instructions, and go-around orders.</p>
+      <p class="coming-desc">A second radio receiver tuned to Lisbon tower's frequency will capture live communications between pilots and air traffic control — linking each aircraft to the exact instructions they received in real time.</p>
       <span class="coming-tag">RTL-SDR · 118.1 MHz</span>
     </div>
   </div>
