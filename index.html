@@ -137,6 +137,27 @@ nav {
   color: var(--black) !important;
 }
 
+/* LANG SWITCHER */
+.lang-switcher {
+  background: none;
+  border: 1px solid rgba(240,237,232,0.18);
+  border-radius: 2px;
+  color: rgba(240,237,232,0.45);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .2s;
+  text-transform: uppercase;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.lang-switcher:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
 /* HERO */
 .hero {
   min-height: 100vh;
@@ -1510,13 +1531,14 @@ body::after {
     <span class="nav-wordmark">LISBON <span>FINALS</span></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#feed">Live feed</a></li>
-    <li><a href="#stats">Stats</a></li>
-    <li><a href="#noise">Noise data</a></li>
-    <li><a href="#warning" style="color:rgba(248,113,113,0.7);">⚠ Warning</a></li>
+    <li><a href="#how" data-i18n="nav_how">How it works</a></li>
+    <li><a href="#feed" data-i18n="nav_feed">Live feed</a></li>
+    <li><a href="#stats" data-i18n="nav_stats">Stats</a></li>
+    <li><a href="#noise" data-i18n="nav_noise">Noise data</a></li>
+    <li><a href="#warning" style="color:rgba(248,113,113,0.7);" data-i18n="nav_warning">⚠ Warning</a></li>
     <li><a href="https://instagram.com/lisbon.finals" class="nav-cta">@lisbon.finals</a></li>
   </ul>
+  <button class="lang-switcher" id="lang-btn" onclick="toggleLang()">PT</button>
 </nav>
 
 <!-- HERO -->
@@ -1555,54 +1577,54 @@ body::after {
   </div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">Lisbon · LPPT · Runway 03/21</div>
-    <h1 class="hero-title">
+    <div class="hero-eyebrow" data-i18n="hero_eyebrow">Lisbon · LPPT · Runway 03/21</div>
+    <h1 class="hero-title" data-i18n-html="hero_title">
       My Lisbon terrace.<br>
       Every plane.<br>
       <em>Captured.</em>
     </h1>
-    <p class="hero-sub">
+    <p class="hero-sub" data-i18n="hero_sub">
       An autonomous system on a Lisbon terrace tracks every aircraft on final approach and departure — combining ADS-B radar, acoustic sensors, and AI vision to document the skies above Humberto Delgado Airport.
     </p>
     <div class="hero-stats">
       <div>
         <span class="hero-stat-val" id="stat-flights">3,700+</span>
-        <span class="hero-stat-lbl">Flights tracked</span>
+        <span class="hero-stat-lbl" data-i18n="stat_flights_lbl">Flights tracked</span>
       </div>
       <div>
         <span class="hero-stat-val" id="stat-photos">1,168</span>
-        <span class="hero-stat-lbl">Photos captured</span>
+        <span class="hero-stat-lbl" data-i18n="stat_photos_lbl">Photos captured</span>
       </div>
       <div>
         <span class="hero-stat-val">99.9<span style="font-size:16px;color:rgba(240,237,232,0.4)"> dB</span></span>
-        <span class="hero-stat-lbl">Peak noise</span>
+        <span class="hero-stat-lbl" data-i18n="stat_peak_lbl">Peak noise</span>
       </div>
     </div>
     <div class="hero-actions">
-      <a href="https://instagram.com/lisbon.finals" class="btn-primary">Follow on Instagram</a>
-      <a href="#how" class="btn-secondary">How it works</a>
+      <a href="https://instagram.com/lisbon.finals" class="btn-primary" data-i18n="btn_instagram">Follow on Instagram</a>
+      <a href="#how" class="btn-secondary" data-i18n="nav_how">How it works</a>
     </div>
   </div>
 
   <div class="hero-scroll">
     <div class="scroll-line"></div>
-    scroll
+    <span data-i18n="scroll_txt">scroll</span>
   </div>
 </section>
 
 
 <!-- HOW IT WORKS -->
 <section class="section" id="how">
-  <div class="section-label">The system</div>
-  <h2 class="section-title reveal">Automated<br><em>from detection to post</em></h2>
-  <p class="section-sub reveal">Six autonomous layers — from raw radio signals to 4K Instagram posts. No human in the loop. Real-time ADS-B decoding, AI vision scoring, neural upscaling and intelligent scheduling — all running 24/7 on a Raspberry Pi 4 under the Lisbon sky.</p>
+  <div class="section-label" data-i18n="how_label">The system</div>
+  <h2 class="section-title reveal" data-i18n-html="how_title">Automated<br><em>from detection to post</em></h2>
+  <p class="section-sub reveal" data-i18n="how_sub">Six autonomous layers — from raw radio signals to 4K Instagram posts. No human in the loop. Real-time ADS-B decoding, AI vision scoring, neural upscaling and intelligent scheduling — all running 24/7 on a Raspberry Pi 4 under the Lisbon sky.</p>
 
   <div class="steps">
     <div class="step reveal">
       <span class="step-num">01</span>
       <span class="step-icon">📡</span>
-      <div class="step-title">Detect & Measure</div>
-      <p class="step-desc">A small radio receiver picks up the signals every commercial aircraft is required to broadcast — giving us the flight number, altitude, speed and exact position in real time. A microphone simultaneously measures the noise level on the terrace. The system only triggers when both conditions are true: a plane is close enough, and loud enough.</p>
+      <div class="step-title" data-i18n="step1_title">Detect & Measure</div>
+      <p class="step-desc" data-i18n="step1_desc">A small radio receiver picks up the signals every commercial aircraft is required to broadcast — giving us the flight number, altitude, speed and exact position in real time. A microphone simultaneously measures the noise level on the terrace. The system only triggers when both conditions are true: a plane is close enough, and loud enough.</p>
       <div class="step-tech">
         <span class="tech-tag">RTL-SDR</span>
         <span class="tech-tag">ADS-B 1090 MHz</span>
@@ -1614,8 +1636,8 @@ body::after {
     <div class="step reveal" style="transition-delay:.1s">
       <span class="step-num">02</span>
       <span class="step-icon">👁</span>
-      <div class="step-title">Capture & Score</div>
-      <p class="step-desc">A 4K camera continuously streams footage of the approach path. Every frame is instantly rated by an intelligent scoring system — only shots where a plane is clearly and sharply visible make the cut. The best frame is then paired with live flight data and sent to an AI to write the caption.</p>
+      <div class="step-title" data-i18n="step2_title">Capture & Score</div>
+      <p class="step-desc" data-i18n="step2_desc">A 4K camera continuously streams footage of the approach path. Every frame is instantly rated by an intelligent scoring system — only shots where a plane is clearly and sharply visible make the cut. The best frame is then paired with live flight data and sent to an AI to write the caption.</p>
       <div class="step-tech">
         <span class="tech-tag">Reolink 4K</span>
         <span class="tech-tag">RTSP</span>
@@ -1627,8 +1649,8 @@ body::after {
     <div class="step reveal" style="transition-delay:.2s">
       <span class="step-num">03</span>
       <span class="step-icon">✦</span>
-      <div class="step-title">Enhance & Publish</div>
-      <p class="step-desc">The chosen photo is processed by an AI image enhancer that reconstructs fine detail at 4× the original resolution — about 15 minutes on the station's small onboard computer. It is then automatically scheduled, avoiding quiet hours at night (11pm–7am). Everything goes live on @lisbon.finals with the AI-written caption and flight data — no human involved.</p>
+      <div class="step-title" data-i18n="step3_title">Enhance & Publish</div>
+      <p class="step-desc" data-i18n="step3_desc">The chosen photo is processed by an AI image enhancer that reconstructs fine detail at 4× the original resolution — about 15 minutes on the station's small onboard computer. It is then automatically scheduled, avoiding quiet hours at night (11pm–7am). Everything goes live on @lisbon.finals with the AI-written caption and flight data — no human involved.</p>
       <div class="step-tech">
         <span class="tech-tag">Real-ESRGAN ×4</span>
         <span class="tech-tag">ONNX Runtime</span>
@@ -1641,7 +1663,7 @@ body::after {
 
   <!-- Pipeline flow -->
   <div class="pipeline-wrap reveal">
-    <div class="pipeline-label">Full automation pipeline · end to end · zero human trigger</div>
+    <div class="pipeline-label" data-i18n="pipeline_label">Full automation pipeline · end to end · zero human trigger</div>
     <div class="pipeline">
       <div class="pipeline-node hl">RTL-SDR<br>1090 MHz</div>
       <div class="pipeline-arrow">→</div>
@@ -1670,9 +1692,9 @@ body::after {
 
     <!-- LEFT: context + runway cards -->
     <div class="weather-left reveal">
-      <div class="section-label">Atmospheric conditions</div>
-      <h2 class="section-title">The wind<br><em>decides everything</em></h2>
-      <p style="color:var(--gray);font-size:0.95rem;line-height:1.75;margin-bottom:48px;max-width:460px;">
+      <div class="section-label" data-i18n="weather_label">Atmospheric conditions</div>
+      <h2 class="section-title" data-i18n-html="weather_title">The wind<br><em>decides everything</em></h2>
+      <p style="color:var(--gray);font-size:0.95rem;line-height:1.75;margin-bottom:48px;max-width:460px;" data-i18n="weather_desc">
         LPPT's runway runs SSW–NNE. It never moves — but the wind decides which way traffic flows. With a north wind, aircraft approach from the south, descending over the Tejo and the city centre before touching down on RWY 03 — crossing my terrace on final approach. With a south wind, they take off on RWY 21 climbing towards the SSW, crossing over the terrace then the Tejo and the city centre below.
       </p>
 
@@ -1681,16 +1703,16 @@ body::after {
         <div class="runway-config rwy-inactive" id="rwy-landing">
           <div class="rwy-badge">RWY 03</div>
           <div>
-            <div class="rwy-title">North wind — landing over the terrace ✦</div>
-            <div class="rwy-desc">Planes approach from the south and land over my terrace. Close, slow, full-frame — most impactful shots.</div>
+            <div class="rwy-title" data-i18n="rwy03_title">North wind — landing over the terrace ✦</div>
+            <div class="rwy-desc" data-i18n="rwy03_desc">Planes approach from the south and land over my terrace. Close, slow, full-frame — most impactful shots.</div>
           </div>
         </div>
         <!-- RWY 21 card (SSW wind → takeoff/approach from south) -->
         <div class="runway-config rwy-inactive" id="rwy-takeoff">
           <div class="rwy-badge">RWY 21</div>
           <div>
-            <div class="rwy-title">South wind — takeoff over the terrace</div>
-            <div class="rwy-desc">Planes take off and climb over my terrace heading north. Higher, faster — less impactful shots.</div>
+            <div class="rwy-title" data-i18n="rwy21_title">South wind — takeoff over the terrace</div>
+            <div class="rwy-desc" data-i18n="rwy21_desc">Planes take off and climb over my terrace heading north. Higher, faster — less impactful shots.</div>
           </div>
         </div>
       </div>
@@ -1747,21 +1769,21 @@ body::after {
 <section class="live-feed-section" id="feed">
   <div class="feed-header">
     <div>
-      <div class="section-label">Latest captures</div>
-      <h2 class="section-title" style="margin-bottom:0;">Live<br><em>from the terrace</em></h2>
+      <div class="section-label" data-i18n="feed_label">Latest captures</div>
+      <h2 class="section-title" style="margin-bottom:0;" data-i18n-html="feed_title">Live<br><em>from the terrace</em></h2>
     </div>
     <div class="live-badge">
       <div class="live-dot"></div>
-      System active
+      <span data-i18n="feed_active">System active</span>
     </div>
   </div>
 
   <div style="background:rgba(245,166,35,0.04);border:1px solid rgba(245,166,35,0.12);border-radius:4px;padding:20px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
     <div>
-      <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;">📷 Full photo archive access</div>
-      <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin:0;">Every aircraft captured since May 3 — high-res, timestamped, with full ADS-B data. Available for researchers, enthusiasts and institutions.</p>
+      <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;" data-i18n="archive_title">📷 Full photo archive access</div>
+      <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin:0;" data-i18n="archive_desc">Every aircraft captured since May 3 — high-res, timestamped, with full ADS-B data. Available for researchers, enthusiasts and institutions.</p>
     </div>
-    <a href="mailto:lisbon.final.spots@gmail.com" style="flex-shrink:0;padding:10px 24px;border:1px solid var(--amber);color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;white-space:nowrap;border-radius:2px;transition:all .2s;">Contact us →</a>
+    <a href="mailto:lisbon.final.spots@gmail.com" style="flex-shrink:0;padding:10px 24px;border:1px solid var(--amber);color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;white-space:nowrap;border-radius:2px;transition:all .2s;" data-i18n="contact_us">Contact us →</a>
   </div>
   <div class="feed-grid" id="feed-grid">
   <div class="feed-card feed-skeleton"></div>
@@ -1857,38 +1879,38 @@ body::after {
 
 <!-- STATS -->
 <section class="stats-section" id="stats">
-  <div class="section-label">By the numbers</div>
-  <h2 class="section-title reveal">The data<br><em>speaks for itself</em></h2>
+  <div class="section-label" data-i18n="stats_label">By the numbers</div>
+  <h2 class="section-title reveal" data-i18n-html="stats_title">The data<br><em>speaks for itself</em></h2>
 
   <div class="stats-grid">
     <div class="stat-card reveal">
       <div class="stat-accent" style="background:var(--amber)"></div>
       <span class="stat-big" style="color:var(--amber)" id="s-flights">3,700<span class="stat-unit">+</span></span>
-      <div class="stat-label">Flights tracked</div>
-      <div class="stat-sub">Since May 3, 2026</div>
+      <div class="stat-label" data-i18n="stat_flights_lbl">Flights tracked</div>
+      <div class="stat-sub" data-i18n="stat_since">Since May 3, 2026</div>
     </div>
     <div class="stat-card reveal" style="transition-delay:.08s">
       <div class="stat-accent" style="background:#4ade80"></div>
       <span class="stat-big" style="color:#4ade80" id="s-photos">1,168</span>
-      <div class="stat-label">Photos captured</div>
-      <div class="stat-sub">By AI · Zero human trigger</div>
+      <div class="stat-label" data-i18n="stat_photos_lbl">Photos captured</div>
+      <div class="stat-sub" data-i18n="stat_ai_sub">By AI · Zero human trigger</div>
     </div>
     <div class="stat-card reveal" style="transition-delay:.16s">
       <div class="stat-accent" style="background:#f87171"></div>
       <span class="stat-big" style="color:#f87171" id="s-peak">99.9<span class="stat-unit"> dB</span></span>
-      <div class="stat-label">Peak noise recorded</div>
+      <div class="stat-label" data-i18n="stat_peak_lbl">Peak noise recorded</div>
       <div class="stat-sub" id="s-peak-sub">TAP30BC · 244m overhead</div>
-      <div style="font-family:var(--mono);font-size:9px;color:rgba(240,237,232,0.2);margin-top:4px;">Sensor limit · upgraded sensor incoming</div>
+      <div style="font-family:var(--mono);font-size:9px;color:rgba(240,237,232,0.2);margin-top:4px;" data-i18n="stat_sensor">Sensor limit · upgraded sensor incoming</div>
     </div>
     <div class="stat-card reveal" style="transition-delay:.24s">
       <div class="stat-accent" style="background:#60b4ff"></div>
       <span class="stat-big" style="color:#60b4ff" id="s-loud">—</span>
-      <div class="stat-label">Flights over 95 dB</div>
-      <div class="stat-sub">Since May 3, 2026</div>
+      <div class="stat-label" data-i18n="stat_loud_lbl">Flights over 95 dB</div>
+      <div class="stat-sub" data-i18n="stat_since">Since May 3, 2026</div>
     </div>
   </div>
 
-  <p class="reveal" style="font-family:var(--mono);font-size:10px;color:rgba(240,237,232,0.2);letter-spacing:.07em;text-align:center;margin-top:36px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.8;text-transform:uppercase;">
+  <p class="reveal" style="font-family:var(--mono);font-size:10px;color:rgba(240,237,232,0.2);letter-spacing:.07em;text-align:center;margin-top:36px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.8;text-transform:uppercase;" data-i18n="stats_disclaimer">
     Depending on wind direction, this station captures either landing approaches or takeoffs — whichever phase passes over the terrace. One phase at a time. These figures reflect observed traffic, not total airport volume.
   </p>
 </section>
@@ -1897,30 +1919,30 @@ body::after {
 <section class="noise-section" id="noise">
   <div class="noise-layout">
     <div>
-      <div class="section-label">Acoustic monitoring</div>
-      <h2 class="section-title reveal">Noise data<br><em>for everyone</em></h2>
-      <p class="section-sub reveal">
+      <div class="section-label" data-i18n="noise_label">Acoustic monitoring</div>
+      <h2 class="section-title reveal" data-i18n-html="noise_title">Noise data<br><em>for everyone</em></h2>
+      <p class="section-sub reveal" data-i18n="noise_sub">
         Every flight is measured in real time. We record peak SPL levels, duration, and frequency — building a continuous acoustic map of what it means to live under the final approach path to LPPT.
       </p>
 
       <div class="noise-cta reveal">
-        <div class="noise-cta-title">Residents, ANAC & Researchers</div>
+        <div class="noise-cta-title" data-i18n="noise_cta_title">Residents, ANAC & Researchers</div>
         <div style="display:flex;flex-direction:column;gap:12px;margin:16px 0;">
           <div style="display:flex;gap:12px;align-items:flex-start;">
             <span style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#f87171;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);padding:3px 8px;border-radius:2px;flex-shrink:0;margin-top:1px;">Acoustic</span>
-            <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin:0;">Continuous log with timestamps, callsigns, dB levels and infraction records — structured for regulatory review or noise impact studies.</p>
+            <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin:0;" data-i18n="noise_acoustic_desc">Continuous log with timestamps, callsigns, dB levels and infraction records — structured for regulatory review or noise impact studies.</p>
           </div>
           <div style="display:flex;gap:12px;align-items:flex-start;">
             <span style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);padding:3px 8px;border-radius:2px;flex-shrink:0;margin-top:1px;">Visual</span>
-            <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin:0;">High-res photo archive of every aircraft captured since May 3 — timestamped and matched with full ADS-B data.</p>
+            <p style="font-size:13px;color:rgba(240,237,232,0.45);line-height:1.6;margin:0;" data-i18n="noise_visual_desc">High-res photo archive of every aircraft captured since May 3 — timestamped and matched with full ADS-B data.</p>
           </div>
         </div>
-        <a href="mailto:lisbon.final.spots@gmail.com" class="btn-contact">Request data access →</a>
+        <a href="mailto:lisbon.final.spots@gmail.com" class="btn-contact" data-i18n="noise_cta_btn">Request data access →</a>
       </div>
     </div>
 
     <div class="noise-chart-area reveal">
-      <div class="chart-title">Average noise by hour — dB SPL · Today <span style="color:rgba(240,237,232,0.25);font-size:9px;">· indicative · sensor max 99.9 dB</span></div>
+      <div class="chart-title" data-i18n-html="chart_title_html">Average noise by hour — dB SPL · Today <span style="color:rgba(240,237,232,0.25);font-size:9px;">· indicative · sensor max 99.9 dB</span></div>
       <div class="chart-bars" id="chart-bars">
         <!-- Generated by JS -->
       </div>
@@ -1931,19 +1953,19 @@ body::after {
       <div class="noise-peaks">
         <div class="noise-peak">
           <span class="noise-peak-val" style="color:#f87171" id="n-peak">99.9 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
-          <div class="noise-peak-lbl">Peak today</div>
+          <div class="noise-peak-lbl" data-i18n="noise_peak_today">Peak today</div>
         </div>
         <div class="noise-peak">
           <span class="noise-peak-val" style="color:var(--amber)" id="n-avg">90.2 <span style="font-size:14px;color:rgba(240,237,232,0.4)">dB</span></span>
-          <div class="noise-peak-lbl">Daily average</div>
+          <div class="noise-peak-lbl" data-i18n="noise_daily_avg">Daily average</div>
         </div>
         <div class="noise-peak">
           <span class="noise-peak-val" style="color:#60b4ff" id="n-today">530</span>
-          <div class="noise-peak-lbl">Flights today</div>
+          <div class="noise-peak-lbl" data-i18n="noise_flights_today">Flights today</div>
         </div>
         <div class="noise-peak">
           <span class="noise-peak-val" style="color:#4ade80" id="n-rush">9h</span>
-          <div class="noise-peak-lbl">Rush hour</div>
+          <div class="noise-peak-lbl" data-i18n="noise_rush">Rush hour</div>
         </div>
       </div>
     </div>
@@ -1955,10 +1977,10 @@ body::after {
 <section class="anac-section" id="warning">
   <div class="section-label" style="color:#f87171;">
     <span style="width:24px;height:1px;background:#f87171;display:inline-block;"></span>
-    Night restrictions · ANAC
+    <span data-i18n="anac_label">Night restrictions · ANAC</span>
   </div>
-  <h2 class="section-title reveal" style="font-size:clamp(36px,4vw,60px);">Warning<br><em>Zone</em></h2>
-  <p class="section-sub reveal">
+  <h2 class="section-title reveal" style="font-size:clamp(36px,4vw,60px);" data-i18n-html="anac_title">Warning<br><em>Zone</em></h2>
+  <p class="section-sub reveal" data-i18n="anac_sub">
     ANAC strictly regulates night operations at LPPT. Aircraft exceeding 98.9 EPNdB are prohibited between 00:00–06:00. We track every potential violation in real time.
   </p>
 
@@ -1968,29 +1990,29 @@ body::after {
       <div class="anac-rule">
         <div class="anac-rule-icon">🚫</div>
         <div>
-          <div class="anac-rule-title">Curfew 00:00–06:00</div>
-          <div class="anac-rule-desc">Max 91 movements/week · 26/day. No scheduled flights during night period.</div>
+          <div class="anac-rule-title" data-i18n="anac_rule1_title">Curfew 00:00–06:00</div>
+          <div class="anac-rule-desc" data-i18n="anac_rule1_desc">Max 91 movements/week · 26/day. No scheduled flights during night period.</div>
         </div>
       </div>
       <div class="anac-rule">
         <div class="anac-rule-icon">🔇</div>
         <div>
-          <div class="anac-rule-title">Noisy Aircraft Ban</div>
-          <div class="anac-rule-desc">Aircraft &gt;98.9 EPNdB (Levels 8 &amp; 16) strictly prohibited at night.</div>
+          <div class="anac-rule-title" data-i18n="anac_rule2_title">Noisy Aircraft Ban</div>
+          <div class="anac-rule-desc" data-i18n="anac_rule2_desc">Aircraft &gt;98.9 EPNdB (Levels 8 &amp; 16) strictly prohibited at night.</div>
         </div>
       </div>
       <div class="anac-rule">
         <div class="anac-rule-icon">⚠️</div>
         <div>
-          <div class="anac-rule-title">Level 2 Restriction</div>
-          <div class="anac-rule-desc">93–95.9 EPNdB aircraft: only 00:00–00:30 and 05:00–06:00.</div>
+          <div class="anac-rule-title" data-i18n="anac_rule3_title">Level 2 Restriction</div>
+          <div class="anac-rule-desc" data-i18n="anac_rule3_desc">93–95.9 EPNdB aircraft: only 00:00–00:30 and 05:00–06:00.</div>
         </div>
       </div>
       <div class="anac-rule">
         <div class="anac-rule-icon">🛑</div>
         <div>
-          <div class="anac-rule-title">Reverse Thrust Banned</div>
-          <div class="anac-rule-desc">Landing reverse thrust is strictly forbidden except in emergencies.</div>
+          <div class="anac-rule-title" data-i18n="anac_rule4_title">Reverse Thrust Banned</div>
+          <div class="anac-rule-desc" data-i18n="anac_rule4_desc">Landing reverse thrust is strictly forbidden except in emergencies.</div>
         </div>
       </div>
     </div>
@@ -2000,7 +2022,7 @@ body::after {
 
       <!-- Quota hebdomadaire -->
       <div class="anac-stat-card" style="border-color:rgba(248,113,113,0.3);">
-        <div class="anac-stat-lbl" style="margin-bottom:14px;">Night movements · this week</div>
+        <div class="anac-stat-lbl" style="margin-bottom:14px;" data-i18n="anac_night_lbl">Night movements · this week</div>
         <div class="anac-stat-val" style="color:#f87171;" id="anac-night-flights">—</div>
         <div class="anac-stat-sub">Limit: 91/week · <span id="anac-week-from"></span></div>
         <div class="anac-progress" style="margin-top:14px;">
@@ -2012,29 +2034,29 @@ body::after {
       <div class="anac-stat-card" id="anac-crit-card" style="border-color:rgba(248,113,113,0.2);transition:border-color .4s,background .4s;">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
           <span class="anac-live-dot" id="anac-crit-dot"></span>
-          <span class="anac-stat-lbl" style="margin:0;color:#f87171;">Critical violations</span>
+          <span class="anac-stat-lbl" style="margin:0;color:#f87171;" data-i18n="anac_crit_lbl">Critical violations</span>
         </div>
         <div class="anac-stat-val" id="anac-crit-count" style="color:#f87171;">—</div>
-        <div class="anac-stat-sub">&gt;98.9 dB · 00:00–06:00 · strictly banned</div>
-        <div id="anac-crit-ok" style="display:none;font-family:var(--mono);font-size:10px;color:var(--green);margin-top:12px;letter-spacing:.1em;">✓ NONE THIS WEEK</div>
+        <div class="anac-stat-sub" data-i18n="anac_crit_sub">&gt;98.9 dB · 00:00–06:00 · strictly banned</div>
+        <div id="anac-crit-ok" style="display:none;font-family:var(--mono);font-size:10px;color:var(--green);margin-top:12px;letter-spacing:.1em;" data-i18n="anac_none">✓ NONE THIS WEEK</div>
       </div>
 
       <!-- Infractions niveau 2 -->
       <div class="anac-stat-card" id="anac-l2-card" style="border-color:rgba(245,166,35,0.2);transition:border-color .4s,background .4s;">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;">
           <span class="anac-live-dot amber" id="anac-l2-dot"></span>
-          <span class="anac-stat-lbl" style="margin:0;color:var(--amber);">Level 2 violations</span>
+          <span class="anac-stat-lbl" style="margin:0;color:var(--amber);" data-i18n="anac_l2_lbl">Level 2 violations</span>
         </div>
         <div class="anac-stat-val" id="anac-l2-count" style="color:var(--amber);">—</div>
-        <div class="anac-stat-sub">93–95.9 dB · outside 00:30–05:00 window</div>
-        <div id="anac-l2-ok" style="display:none;font-family:var(--mono);font-size:10px;color:var(--green);margin-top:12px;letter-spacing:.1em;">✓ NONE THIS WEEK</div>
+        <div class="anac-stat-sub" data-i18n="anac_l2_sub">93–95.9 dB · outside 00:30–05:00 window</div>
+        <div id="anac-l2-ok" style="display:none;font-family:var(--mono);font-size:10px;color:var(--green);margin-top:12px;letter-spacing:.1em;" data-i18n="anac_none">✓ NONE THIS WEEK</div>
       </div>
 
       <!-- Last Incident card -->
       <div class="anac-incident-card" id="anac-last-inf-card">
         <div class="anac-incident-header">
           <span class="anac-live-dot" id="anac-inc-dot" style="display:inline-block;"></span>
-          <span class="anac-incident-header-label" id="anac-inc-type-label">Last incident detected</span>
+          <span class="anac-incident-header-label" id="anac-inc-type-label" data-i18n="anac_last_inc">Last incident detected</span>
           <span class="anac-incident-header-ts" id="anac-inc-ts">—</span>
         </div>
         <div class="anac-incident-body">
@@ -2055,33 +2077,33 @@ body::after {
 
 <!-- COMING SOON -->
 <section class="coming-section" id="coming">
-  <div class="section-label">What's next</div>
-  <h2 class="section-title reveal">Upgrades<br><em>in progress</em></h2>
-  <p class="section-sub reveal">The station is continuously evolving. New hardware and sensors are being integrated to capture even more — from vibration analysis and industrial-grade acoustics to live ATC communications and air quality monitoring.</p>
+  <div class="section-label" data-i18n="coming_label">What's next</div>
+  <h2 class="section-title reveal" data-i18n-html="coming_title">Upgrades<br><em>in progress</em></h2>
+  <p class="section-sub reveal" data-i18n="coming_sub">The station is continuously evolving. New hardware and sensors are being integrated to capture even more — from vibration analysis and industrial-grade acoustics to live ATC communications and air quality monitoring.</p>
 
   <div class="coming-grid">
     <div class="coming-card reveal">
       <span class="coming-icon">🔊</span>
-      <div class="coming-title">130 dB Sound Sensor</div>
-      <p class="coming-desc">An industrial-grade sound meter will replace the current microphone. The new sensor handles up to 130 dB without maxing out — capturing the full impact of a low-flying aircraft as real numbers, not just a ceiling.</p>
-      <span class="coming-tag">Hardware · Ordered</span>
+      <div class="coming-title" data-i18n="c1_title">130 dB Sound Sensor</div>
+      <p class="coming-desc" data-i18n="c1_desc">An industrial-grade sound meter will replace the current microphone. The new sensor handles up to 130 dB without maxing out — capturing the full impact of a low-flying aircraft as real numbers, not just a ceiling.</p>
+      <span class="coming-tag" data-i18n="c1_tag">Hardware · Ordered</span>
     </div>
     <div class="coming-card reveal" style="transition-delay:.08s">
       <span class="coming-icon">🌀</span>
-      <div class="coming-title">Dual IMU Vibration</div>
-      <p class="coming-desc">Two motion sensors mounted on the terrace will detect the physical vibration caused by passing aircraft — the kind you feel in your chest but a microphone can't fully capture. A new dimension of impact, beyond sound.</p>
+      <div class="coming-title" data-i18n="c2_title">Dual IMU Vibration</div>
+      <p class="coming-desc" data-i18n="c2_desc">Two motion sensors mounted on the terrace will detect the physical vibration caused by passing aircraft — the kind you feel in your chest but a microphone can't fully capture. A new dimension of impact, beyond sound.</p>
       <span class="coming-tag">Hardware · I²C</span>
     </div>
     <div class="coming-card reveal" style="transition-delay:.16s">
       <span class="coming-icon">🌬</span>
-      <div class="coming-title">Air Quality Station</div>
-      <p class="coming-desc">Two environmental sensors will measure fine particles and air pollutants over the terrace in real time — correlating each aircraft passage with a concrete air quality reading. A first for a private monitoring station in Lisbon.</p>
-      <span class="coming-tag">Environmental · SGP30 · PMS5003</span>
+      <div class="coming-title" data-i18n="c3_title">Air Quality Station</div>
+      <p class="coming-desc" data-i18n="c3_desc">Two environmental sensors will measure fine particles and air pollutants over the terrace in real time — correlating each aircraft passage with a concrete air quality reading. A first for a private monitoring station in Lisbon.</p>
+      <span class="coming-tag" data-i18n="c3_tag">Environmental · SGP30 · PMS5003</span>
     </div>
     <div class="coming-card reveal" style="transition-delay:.24s">
       <span class="coming-icon">📡</span>
-      <div class="coming-title">Live ATC Listening</div>
-      <p class="coming-desc">A second radio receiver tuned to Lisbon tower's frequency will capture live communications between pilots and air traffic control — linking each aircraft to the exact instructions they received in real time.</p>
+      <div class="coming-title" data-i18n="c4_title">Live ATC Listening</div>
+      <p class="coming-desc" data-i18n="c4_desc">A second radio receiver tuned to Lisbon tower's frequency will capture live communications between pilots and air traffic control — linking each aircraft to the exact instructions they received in real time.</p>
       <span class="coming-tag">RTL-SDR · 118.1 MHz</span>
     </div>
   </div>
@@ -2092,7 +2114,7 @@ body::after {
   <div class="footer-top">
     <div class="footer-brand">
       <div class="footer-brand-name">LISBON <span>FINALS</span></div>
-      <p class="footer-desc">An autonomous aircraft spotting and acoustic monitoring system operating 24/7 from a residential terrace in Lisbon, directly under the final approach path to LPPT.</p>
+      <p class="footer-desc" data-i18n="footer_desc">An autonomous aircraft spotting and acoustic monitoring system operating 24/7 from a residential terrace in Lisbon, directly under the final approach path to LPPT.</p>
     </div>
 
     <!-- Radar — colonne centrale -->
@@ -2142,21 +2164,21 @@ body::after {
 
     <div class="footer-links">
       <div class="footer-col">
-        <div class="footer-col-title">Project</div>
-        <a href="#how">How it works</a>
-        <a href="#stats">Statistics</a>
-        <a href="#noise">Noise data</a>
+        <div class="footer-col-title" data-i18n="footer_project">Project</div>
+        <a href="#how" data-i18n="nav_how">How it works</a>
+        <a href="#stats" data-i18n="footer_stats_link">Statistics</a>
+        <a href="#noise" data-i18n="nav_noise">Noise data</a>
       </div>
       <div class="footer-col">
-        <div class="footer-col-title">Connect</div>
+        <div class="footer-col-title" data-i18n="footer_connect">Connect</div>
         <a href="https://instagram.com/lisbon.finals">@lisbon.finals</a>
-        <a href="mailto:lisbon.final.spots@gmail.com">Contact</a>
-        <a href="#">For institutions</a>
+        <a href="mailto:lisbon.final.spots@gmail.com" data-i18n="footer_contact_lnk">Contact</a>
+        <a href="#" data-i18n="footer_institutions">For institutions</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Lisbon Finals · Automated Aviation Intelligence · LPPT</span>
+    <span class="footer-copy" data-i18n="footer_copy">© 2026 Lisbon Finals · Automated Aviation Intelligence · LPPT</span>
     <a href="https://instagram.com/lisbon.finals" class="footer-insta">
       📸 @lisbon.finals
     </a>
@@ -2497,6 +2519,206 @@ setTimeout(loadLiveData, 300);
 
   fetchWeather();
   setInterval(fetchWeather, 600000); // refresh every 10 min
+})();
+</script>
+
+<!-- ── LANGUAGE SWITCHER ─────────────────────────────────────────── -->
+<script>
+(function() {
+  var T = {
+    en: {
+      nav_how: 'How it works', nav_feed: 'Live feed', nav_stats: 'Stats',
+      nav_noise: 'Noise data', nav_warning: '⚠ Warning',
+      hero_eyebrow: 'Lisbon · LPPT · Runway 03/21',
+      hero_title: 'My Lisbon terrace.<br>Every plane.<br><em>Captured.</em>',
+      hero_sub: 'An autonomous system on a Lisbon terrace tracks every aircraft on final approach and departure — combining ADS-B radar, acoustic sensors, and AI vision to document the skies above Humberto Delgado Airport.',
+      stat_flights_lbl: 'Flights tracked', stat_photos_lbl: 'Photos captured', stat_peak_lbl: 'Peak noise',
+      btn_instagram: 'Follow on Instagram', scroll_txt: 'scroll',
+      how_label: 'The system',
+      how_title: 'Automated<br><em>from detection to post</em>',
+      how_sub: 'Six autonomous layers — from raw radio signals to 4K Instagram posts. No human in the loop. Real-time ADS-B decoding, AI vision scoring, neural upscaling and intelligent scheduling — all running 24/7 on a Raspberry Pi 4 under the Lisbon sky.',
+      step1_title: 'Detect & Measure',
+      step1_desc: 'A small radio receiver picks up the signals every commercial aircraft is required to broadcast — giving us the flight number, altitude, speed and exact position in real time. A microphone simultaneously measures the noise level on the terrace. The system only triggers when both conditions are true: a plane is close enough, and loud enough.',
+      step2_title: 'Capture & Score',
+      step2_desc: 'A 4K camera continuously streams footage of the approach path. Every frame is instantly rated by an intelligent scoring system — only shots where a plane is clearly and sharply visible make the cut. The best frame is then paired with live flight data and sent to an AI to write the caption.',
+      step3_title: 'Enhance & Publish',
+      step3_desc: 'The chosen photo is processed by an AI image enhancer that reconstructs fine detail at 4× the original resolution — about 15 minutes on the station\'s small onboard computer. It is then automatically scheduled, avoiding quiet hours at night (11pm–7am). Everything goes live on @lisbon.finals with the AI-written caption and flight data — no human involved.',
+      pipeline_label: 'Full automation pipeline · end to end · zero human trigger',
+      weather_label: 'Atmospheric conditions',
+      weather_title: 'The wind<br><em>decides everything</em>',
+      weather_desc: 'LPPT\'s runway runs SSW–NNE. It never moves — but the wind decides which way traffic flows. With a north wind, aircraft approach from the south, descending over the Tejo and the city centre before touching down on RWY 03 — crossing my terrace on final approach. With a south wind, they take off on RWY 21 climbing towards the SSW, crossing over the terrace then the Tejo and the city centre below.',
+      rwy03_title: 'North wind — landing over the terrace ✦',
+      rwy03_desc: 'Planes approach from the south and land over my terrace. Close, slow, full-frame — most impactful shots.',
+      rwy21_title: 'South wind — takeoff over the terrace',
+      rwy21_desc: 'Planes take off and climb over my terrace heading north. Higher, faster — less impactful shots.',
+      feed_label: 'Latest captures',
+      feed_title: 'Live<br><em>from the terrace</em>',
+      feed_active: 'System active',
+      archive_title: '📷 Full photo archive access',
+      archive_desc: 'Every aircraft captured since May 3 — high-res, timestamped, with full ADS-B data. Available for researchers, enthusiasts and institutions.',
+      contact_us: 'Contact us →',
+      stats_label: 'By the numbers',
+      stats_title: 'The data<br><em>speaks for itself</em>',
+      stat_since: 'Since May 3, 2026', stat_ai_sub: 'By AI · Zero human trigger',
+      stat_sensor: 'Sensor limit · upgraded sensor incoming',
+      stat_loud_lbl: 'Flights over 95 dB',
+      stats_disclaimer: 'Depending on wind direction, this station captures either landing approaches or takeoffs — whichever phase passes over the terrace. One phase at a time. These figures reflect observed traffic, not total airport volume.',
+      noise_label: 'Acoustic monitoring',
+      noise_title: 'Noise data<br><em>for everyone</em>',
+      noise_sub: 'Every flight is measured in real time. We record peak SPL levels, duration, and frequency — building a continuous acoustic map of what it means to live under the final approach path to LPPT.',
+      noise_cta_title: 'Residents, ANAC & Researchers',
+      noise_acoustic_desc: 'Continuous log with timestamps, callsigns, dB levels and infraction records — structured for regulatory review or noise impact studies.',
+      noise_visual_desc: 'High-res photo archive of every aircraft captured since May 3 — timestamped and matched with full ADS-B data.',
+      noise_cta_btn: 'Request data access →',
+      chart_title_html: 'Average noise by hour — dB SPL · Today <span style="color:rgba(240,237,232,0.25);font-size:9px;">· indicative · sensor max 99.9 dB</span>',
+      noise_peak_today: 'Peak today', noise_daily_avg: 'Daily average',
+      noise_flights_today: 'Flights today', noise_rush: 'Rush hour',
+      anac_label: 'Night restrictions · ANAC',
+      anac_title: 'Warning<br><em>Zone</em>',
+      anac_sub: 'ANAC strictly regulates night operations at LPPT. Aircraft exceeding 98.9 EPNdB are prohibited between 00:00–06:00. We track every potential violation in real time.',
+      anac_rule1_title: 'Curfew 00:00–06:00',
+      anac_rule1_desc: 'Max 91 movements/week · 26/day. No scheduled flights during night period.',
+      anac_rule2_title: 'Noisy Aircraft Ban',
+      anac_rule2_desc: 'Aircraft >98.9 EPNdB (Levels 8 & 16) strictly prohibited at night.',
+      anac_rule3_title: 'Level 2 Restriction',
+      anac_rule3_desc: '93–95.9 EPNdB aircraft: only 00:00–00:30 and 05:00–06:00.',
+      anac_rule4_title: 'Reverse Thrust Banned',
+      anac_rule4_desc: 'Landing reverse thrust is strictly forbidden except in emergencies.',
+      anac_night_lbl: 'Night movements · this week',
+      anac_crit_lbl: 'Critical violations',
+      anac_crit_sub: '>98.9 dB · 00:00–06:00 · strictly banned',
+      anac_none: '✓ NONE THIS WEEK',
+      anac_l2_lbl: 'Level 2 violations',
+      anac_l2_sub: '93–95.9 dB · outside 00:30–05:00 window',
+      anac_last_inc: 'Last incident detected',
+      coming_label: "What's next",
+      coming_title: 'Upgrades<br><em>in progress</em>',
+      coming_sub: 'The station is continuously evolving. New hardware and sensors are being integrated to capture even more — from vibration analysis and industrial-grade acoustics to live ATC communications and air quality monitoring.',
+      c1_title: '130 dB Sound Sensor',
+      c1_desc: 'An industrial-grade sound meter will replace the current microphone. The new sensor handles up to 130 dB without maxing out — capturing the full impact of a low-flying aircraft as real numbers, not just a ceiling.',
+      c1_tag: 'Hardware · Ordered',
+      c2_title: 'Dual IMU Vibration',
+      c2_desc: 'Two motion sensors mounted on the terrace will detect the physical vibration caused by passing aircraft — the kind you feel in your chest but a microphone can\'t fully capture. A new dimension of impact, beyond sound.',
+      c3_title: 'Air Quality Station',
+      c3_desc: 'Two environmental sensors will measure fine particles and air pollutants over the terrace in real time — correlating each aircraft passage with a concrete air quality reading. A first for a private monitoring station in Lisbon.',
+      c3_tag: 'Environmental · SGP30 · PMS5003',
+      c4_title: 'Live ATC Listening',
+      c4_desc: 'A second radio receiver tuned to Lisbon tower\'s frequency will capture live communications between pilots and air traffic control — linking each aircraft to the exact instructions they received in real time.',
+      footer_desc: 'An autonomous aircraft spotting and acoustic monitoring system operating 24/7 from a residential terrace in Lisbon, directly under the final approach path to LPPT.',
+      footer_project: 'Project', footer_stats_link: 'Statistics',
+      footer_connect: 'Connect', footer_contact_lnk: 'Contact',
+      footer_institutions: 'For institutions',
+      footer_copy: '© 2026 Lisbon Finals · Automated Aviation Intelligence · LPPT'
+    },
+    pt: {
+      nav_how: 'Como funciona', nav_feed: 'Feed em direto', nav_stats: 'Estatísticas',
+      nav_noise: 'Dados de ruído', nav_warning: '⚠ Aviso',
+      hero_eyebrow: 'Lisboa · LPPT · Pista 03/21',
+      hero_title: 'O meu terraço em Lisboa.<br>Todos os aviões.<br><em>Capturados.</em>',
+      hero_sub: 'Um sistema autónomo num terraço de Lisboa regista cada aeronave em aproximação final e descolagem — combinando radar ADS-B, sensores acústicos e visão por IA para documentar os céus sobre o Aeroporto Humberto Delgado.',
+      stat_flights_lbl: 'Voos rastreados', stat_photos_lbl: 'Fotos capturadas', stat_peak_lbl: 'Pico de ruído',
+      btn_instagram: 'Seguir no Instagram', scroll_txt: 'rolar',
+      how_label: 'O sistema',
+      how_title: 'Automatizado<br><em>da deteção à publicação</em>',
+      how_sub: 'Seis camadas autónomas — de sinais de rádio brutos a publicações no Instagram em 4K. Sem intervenção humana. Descodificação ADS-B em tempo real, classificação por visão de IA, upscaling neural e agendamento inteligente — tudo a funcionar 24/7 num Raspberry Pi 4 sob o céu de Lisboa.',
+      step1_title: 'Detetar e Medir',
+      step1_desc: 'Um pequeno recetor de rádio capta os sinais que cada aeronave comercial é obrigada a transmitir — fornecendo o número de voo, altitude, velocidade e posição exata em tempo real. Um microfone mede simultaneamente o nível de ruído no terraço. O sistema só é acionado quando ambas as condições são verdadeiras: um avião está suficientemente perto e suficientemente alto.',
+      step2_title: 'Capturar e Classificar',
+      step2_desc: 'Uma câmara 4K transmite continuamente imagens do caminho de aproximação. Cada fotograma é imediatamente avaliado por um sistema de classificação inteligente — apenas as fotos onde um avião é claramente visível passam o filtro. O melhor fotograma é combinado com dados de voo em direto e enviado a uma IA para escrever a legenda.',
+      step3_title: 'Melhorar e Publicar',
+      step3_desc: 'A foto escolhida é processada por um melhorador de imagem com IA que reconstrói detalhes finos a 4× a resolução original — cerca de 15 minutos no pequeno computador da estação. É depois automaticamente agendada, evitando o período noturno (23h–7h). Tudo vai ao ar em @lisbon.finals com a legenda escrita pela IA e os dados do voo — sem intervenção humana.',
+      pipeline_label: 'Pipeline de automação completo · end to end · zero intervenção humana',
+      weather_label: 'Condições atmosféricas',
+      weather_title: 'O vento<br><em>decide tudo</em>',
+      weather_desc: 'A pista do LPPT corre SSW–NNE. Nunca se move — mas é o vento que decide o sentido do tráfego. Com vento de norte, os aviões aproximam-se pelo sul, descendo sobre o Tejo e o centro da cidade antes de aterrar na RWY 03 — cruzando o meu terraço em aproximação final. Com vento de sul, descolam na RWY 21 em direção a SSW, cruzando o terraço e depois o Tejo e o centro da cidade.',
+      rwy03_title: 'Vento norte — aterragem sobre o terraço ✦',
+      rwy03_desc: 'Os aviões aproximam-se pelo sul e aterram sobre o meu terraço. Perto, lentos, em cheio — as fotografias mais impactantes.',
+      rwy21_title: 'Vento sul — descolagem sobre o terraço',
+      rwy21_desc: 'Os aviões descolam e sobem sobre o meu terraço em direção ao norte. Mais alto, mais rápido — menos impacto visual.',
+      feed_label: 'Últimas capturas',
+      feed_title: 'Em direto<br><em>do terraço</em>',
+      feed_active: 'Sistema ativo',
+      archive_title: '📷 Acesso ao arquivo completo de fotos',
+      archive_desc: 'Todos os aviões capturados desde 3 de maio — alta resolução, com carimbo de data/hora e dados ADS-B completos. Disponível para investigadores, entusiastas e instituições.',
+      contact_us: 'Contacte-nos →',
+      stats_label: 'Em números',
+      stats_title: 'Os dados<br><em>falam por si</em>',
+      stat_since: 'Desde 3 de maio de 2026', stat_ai_sub: 'Por IA · Zero intervenção humana',
+      stat_sensor: 'Limite do sensor · novo sensor a caminho',
+      stat_loud_lbl: 'Voos acima de 95 dB',
+      stats_disclaimer: 'Consoante a direção do vento, esta estação capta aterragens ou descolagens — o que quer que passe sobre o terraço. Uma fase de cada vez. Estes números refletem o tráfego observado, não o volume total do aeroporto.',
+      noise_label: 'Monitorização acústica',
+      noise_title: 'Dados de ruído<br><em>para todos</em>',
+      noise_sub: 'Cada voo é medido em tempo real. Registamos níveis SPL de pico, duração e frequência — construindo um mapa acústico contínuo do que significa viver sob o final approach do LPPT.',
+      noise_cta_title: 'Residentes, ANAC & Investigadores',
+      noise_acoustic_desc: 'Registo contínuo com carimbos de data/hora, indicativos de chamada, níveis em dB e registos de infração — estruturado para revisão regulatória ou estudos de impacto acústico.',
+      noise_visual_desc: 'Arquivo fotográfico de alta resolução de cada aeronave capturada desde 3 de maio — com carimbo de data/hora e dados ADS-B completos.',
+      noise_cta_btn: 'Pedir acesso aos dados →',
+      chart_title_html: 'Ruído médio por hora — dB SPL · Hoje <span style="color:rgba(240,237,232,0.25);font-size:9px;">· indicativo · limite do sensor 99,9 dB</span>',
+      noise_peak_today: 'Pico hoje', noise_daily_avg: 'Média diária',
+      noise_flights_today: 'Voos hoje', noise_rush: 'Hora de ponta',
+      anac_label: 'Restrições noturnas · ANAC',
+      anac_title: 'Zona<br><em>de Alerta</em>',
+      anac_sub: 'A ANAC regula rigorosamente as operações noturnas no LPPT. Aeronaves que excedam 98,9 EPNdB estão proibidas entre as 00:00 e as 06:00. Rastreamos cada potencial infração em tempo real.',
+      anac_rule1_title: 'Recolher 00:00–06:00',
+      anac_rule1_desc: 'Máx. 91 movimentos/semana · 26/dia. Sem voos regulares durante o período noturno.',
+      anac_rule2_title: 'Proibição de Aeronaves Ruidosas',
+      anac_rule2_desc: 'Aeronaves >98,9 EPNdB (Níveis 8 & 16) estritamente proibidas à noite.',
+      anac_rule3_title: 'Restrição Nível 2',
+      anac_rule3_desc: 'Aeronaves 93–95,9 EPNdB: apenas 00:00–00:30 e 05:00–06:00.',
+      anac_rule4_title: 'Inversão de Impulso Proibida',
+      anac_rule4_desc: 'A inversão de impulso na aterragem é estritamente proibida exceto em emergências.',
+      anac_night_lbl: 'Movimentos noturnos · esta semana',
+      anac_crit_lbl: 'Infrações críticas',
+      anac_crit_sub: '>98,9 dB · 00:00–06:00 · estritamente proibido',
+      anac_none: '✓ NENHUMA ESTA SEMANA',
+      anac_l2_lbl: 'Infrações nível 2',
+      anac_l2_sub: '93–95,9 dB · fora da janela 00:30–05:00',
+      anac_last_inc: 'Último incidente detetado',
+      coming_label: 'O que vem a seguir',
+      coming_title: 'Melhorias<br><em>em curso</em>',
+      coming_sub: 'A estação está em constante evolução. Novo hardware e sensores estão a ser integrados para capturar ainda mais — desde análise de vibração e acústica de nível industrial a comunicações ATC em direto e monitorização da qualidade do ar.',
+      c1_title: 'Sensor de Som 130 dB',
+      c1_desc: 'Um sonómetro de nível industrial vai substituir o microfone atual. O novo sensor aguenta até 130 dB sem saturar — capturando o impacto total de uma aeronave em baixa altitude com números reais, não apenas um teto.',
+      c1_tag: 'Hardware · Encomendado',
+      c2_title: 'Vibração IMU Dupla',
+      c2_desc: 'Dois sensores de movimento montados no terraço vão detetar a vibração física causada pelas aeronaves — do tipo que se sente no peito mas que um microfone não consegue captar totalmente. Uma nova dimensão de impacto, para além do som.',
+      c3_title: 'Estação de Qualidade do Ar',
+      c3_desc: 'Dois sensores ambientais vão medir partículas finas e poluentes sobre o terraço em tempo real — correlacionando cada passagem de aeronave com uma leitura concreta da qualidade do ar. Uma estreia para uma estação privada em Lisboa.',
+      c3_tag: 'Ambiental · SGP30 · PMS5003',
+      c4_title: 'Escuta ATC em Direto',
+      c4_desc: 'Um segundo recetor de rádio sintonizado na frequência da torre de Lisboa vai capturar as comunicações em direto entre pilotos e controlo de tráfego aéreo — associando cada aeronave às instruções exatas recebidas em tempo real.',
+      footer_desc: 'Um sistema autónomo de avistamento de aeronaves e monitorização acústica a funcionar 24/7 a partir de um terraço residencial em Lisboa, diretamente sob o final approach do LPPT.',
+      footer_project: 'Projeto', footer_stats_link: 'Estatísticas',
+      footer_connect: 'Contacto', footer_contact_lnk: 'Contactar',
+      footer_institutions: 'Para instituições',
+      footer_copy: '© 2026 Lisbon Finals · Inteligência Aeronáutica Autónoma · LPPT'
+    }
+  };
+
+  var currentLang = (localStorage.getItem('lf_lang') || 'en');
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem('lf_lang', lang);
+    document.documentElement.lang = lang;
+    var dict = T[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-html');
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    var btn = document.getElementById('lang-btn');
+    if (btn) btn.textContent = lang === 'en' ? 'PT' : 'EN';
+  }
+
+  window.toggleLang = function() { setLang(currentLang === 'en' ? 'pt' : 'en'); };
+
+  // Init
+  setLang(currentLang);
 })();
 </script>
 </body>
