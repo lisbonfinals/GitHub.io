@@ -1654,10 +1654,6 @@ footer {
   font-size: 11px;
   color: rgba(240,237,232,0.4);
   line-height: 1.75;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .log-entry-num {
   position: absolute;
@@ -1725,6 +1721,7 @@ body::after {
     <li><a href="#stats" data-i18n="nav_stats">Stats</a></li>
     <li><a href="#noise" data-i18n="nav_noise">Noise data</a></li>
     <li><a href="#warning" style="color:rgba(248,113,113,0.7);" data-i18n="nav_warning">⚠ Warning</a></li>
+    <li><a href="#log" data-i18n="nav_log">Captain's Log</a></li>
     <li><a href="https://instagram.com/lisbon.finals" class="nav-cta">@lisbon.finals</a></li>
   </ul>
   <button class="lang-switcher" id="lang-btn" onclick="toggleLang()">PT</button>
@@ -2794,7 +2791,7 @@ setTimeout(loadLiveData, 300);
   var T = {
     en: {
       nav_how: 'How it works', nav_feed: 'Live feed', nav_stats: 'Stats',
-      nav_noise: 'Noise data', nav_warning: '⚠ Warning',
+      nav_noise: 'Noise data', nav_warning: '⚠ Warning', nav_log: "Captain's Log",
       hero_eyebrow: 'Lisbon · LPPT · Runway 03/21',
       hero_title: 'My Lisbon terrace.<br>Every plane.<br><em>Captured.</em>',
       hero_sub: 'An autonomous system on a Lisbon terrace tracks every aircraft on final approach and departure — combining ADS-B radar, acoustic sensors, and AI vision to document the skies above Humberto Delgado Airport.',
@@ -2878,7 +2875,7 @@ setTimeout(loadLiveData, 300);
     },
     pt: {
       nav_how: 'Como funciona', nav_feed: 'Feed em direto', nav_stats: 'Estatísticas',
-      nav_noise: 'Dados de ruído', nav_warning: '⚠ Aviso',
+      nav_noise: 'Dados de ruído', nav_warning: '⚠ Aviso', nav_log: 'Diário de Bordo',
       hero_eyebrow: 'Lisboa · LPPT · Pista 03/21',
       hero_title: 'O meu terraço em Lisboa.<br>Todos os aviões.<br><em>Capturados.</em>',
       hero_sub: 'Um sistema autónomo num terraço de Lisboa regista cada aeronave em aproximação final e descolagem — combinando radar ADS-B, sensores acústicos e visão por IA para documentar os céus sobre o Aeroporto Humberto Delgado.',
