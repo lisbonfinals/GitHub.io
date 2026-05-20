@@ -1555,6 +1555,146 @@ footer {
   .coming-grid { grid-template-columns: 1fr; }
 }
 
+/* ── CAPTAIN'S LOG ─────────────────────────────────────────────────────────── */
+.log-section {
+  padding: 120px 48px;
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.log-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(245,166,35,0.3), transparent);
+}
+.log-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 48px;
+  padding: 10px 16px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-width: 560px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gray);
+}
+.log-terminal-bar .dot { width: 10px; height: 10px; border-radius: 50%; }
+.log-terminal-bar .dot.r { background: #ff5f57; }
+.log-terminal-bar .dot.y { background: #ffbd2e; }
+.log-terminal-bar .dot.g { background: #28c941; }
+.log-terminal-bar .path { margin-left: 8px; color: rgba(245,166,35,0.6); }
+.log-terminal-bar .cursor-blink {
+  display: inline-block;
+  width: 8px; height: 13px;
+  background: rgba(245,166,35,0.7);
+  margin-left: 4px;
+  animation: blink .9s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.log-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.log-entry {
+  padding: 28px 32px;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: border-color .25s, background .25s;
+}
+.log-entry:hover { border-color: rgba(245,166,35,0.2); background: #0e1218; }
+.log-entry.pinned { border-top: 2px solid var(--amber); }
+.log-entry-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.log-cat {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+.log-cat-fix      { background: rgba(245,166,35,.12); color: var(--amber); }
+.log-cat-capture  { background: rgba(0,212,255,.1); color: #00d4ff; }
+.log-cat-hardware { background: rgba(167,139,250,.1); color: #a78bfa; }
+.log-cat-rare     { background: rgba(0,255,136,.1); color: #00ff88; }
+.log-cat-stats    { background: rgba(96,180,255,.1); color: #60b4ff; }
+.log-cat-note     { background: rgba(107,114,128,.12); color: #9ca3af; }
+.log-ts {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--gray);
+  letter-spacing: .05em;
+}
+.log-pin { font-size: 11px; margin-left: auto; }
+.log-entry-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+.log-entry-body {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: rgba(240,237,232,0.4);
+  line-height: 1.75;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.log-entry-num {
+  position: absolute;
+  bottom: 16px; right: 16px;
+  font-family: var(--mono);
+  font-size: 40px;
+  font-weight: 300;
+  color: rgba(245,166,35,0.04);
+  line-height: 1;
+  pointer-events: none;
+}
+.log-empty-state {
+  grid-column: 1/-1;
+  padding: 60px 40px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--gray);
+  border: 1px solid var(--border);
+  background: var(--dark2);
+}
+.log-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.log-footer-label { font-family: var(--mono); font-size: 10px; color: var(--gray); letter-spacing: .1em; }
+.log-updated { font-family: var(--mono); font-size: 10px; color: rgba(245,166,35,0.5); }
+@media (max-width: 1024px) { .log-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) {
+  .log-section { padding: 64px 20px; }
+  .log-grid { grid-template-columns: 1fr; }
+}
+
 /* Grain overlay */
 body::after {
   content: '';
@@ -2156,6 +2296,33 @@ body::after {
       <span class="coming-tag">RTL-SDR · 118.1 MHz</span>
     </div>
   </div>
+</section>
+
+<!-- CAPTAIN'S LOG -->
+<section class="log-section" id="log">
+
+  <div class="section-label">Field Journal</div>
+  <h2 class="section-title reveal">Captain's<br><em>Log</em></h2>
+  <p class="section-sub reveal">What's happening behind the camera. Technical updates, rare catches, bug fixes, hardware changes — written from the terrace in real time.</p>
+
+  <!-- Terminal bar decoration -->
+  <div class="log-terminal-bar">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="path">~/lisbon-finals/logs/journal.json</span>
+    <span class="cursor-blink"></span>
+  </div>
+
+  <!-- Entries grid -->
+  <div class="log-grid" id="logGrid">
+    <div class="log-empty-state">Loading captain's log…</div>
+  </div>
+
+  <!-- Footer row -->
+  <div class="log-footer">
+    <span class="log-footer-label" id="logEntryCount">— entries</span>
+    <span class="log-updated" id="logUpdated"></span>
+  </div>
+
 </section>
 
 <!-- FOOTER -->
@@ -2818,6 +2985,81 @@ setTimeout(loadLiveData, 300);
 
   // Init
   setLang(currentLang);
+})();
+</script>
+
+<!-- ── CAPTAIN'S LOG ─────────────────────────────────────────────── -->
+<script>
+(function() {
+  const JOURNAL_URL = 'https://gist.githubusercontent.com/lisbonfinals/2edb053ac9f9c91047c1b36f706d302c/raw/journal.json';
+
+  const CAT_LABELS = {
+    fix:      '🛠️ Fix',
+    capture:  '📸 Capture',
+    hardware: '⚙️ Hardware',
+    rare:     '✈️ Rare Find',
+    stats:    '📊 Stats',
+    note:     '📝 Note'
+  };
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function renderLog(entries) {
+    const grid = document.getElementById('logGrid');
+    const countEl = document.getElementById('logEntryCount');
+    const updatedEl = document.getElementById('logUpdated');
+
+    if (!entries || !entries.length) {
+      grid.innerHTML = '<div class="log-empty-state">No entries yet — the first one is coming soon.</div>';
+      countEl.textContent = '0 entries';
+      return;
+    }
+
+    // Pinned first, then chronological (newest first)
+    const sorted = [...entries].sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return 0;
+    });
+
+    countEl.textContent = sorted.length + ' entr' + (sorted.length > 1 ? 'ies' : 'y');
+    updatedEl.textContent = 'Last entry: ' + (sorted[0] ? sorted[0].date + ' ' + sorted[0].time : '—');
+
+    grid.innerHTML = sorted.map((e, i) => `
+      <div class="log-entry${e.pinned ? ' pinned' : ''} reveal" style="transition-delay:${(i % 3) * 0.06}s">
+        <div class="log-entry-meta">
+          <span class="log-cat log-cat-${esc(e.category)}">${esc(CAT_LABELS[e.category] || e.category)}</span>
+          <span class="log-ts">${esc(e.date)} ${esc(e.time)}</span>
+          ${e.pinned ? '<span class="log-pin">📌</span>' : ''}
+        </div>
+        <div class="log-entry-title">${esc(e.title)}</div>
+        ${e.body ? `<div class="log-entry-body">${esc(e.body).replace(/\n/g, '<br>')}</div>` : ''}
+        <div class="log-entry-num">${String(i + 1).padStart(2, '0')}</div>
+      </div>
+    `).join('');
+
+    // Trigger reveal animation for new cards
+    if (window.initReveal) window.initReveal();
+  }
+
+  async function loadJournal() {
+    try {
+      const res = await fetch(JOURNAL_URL + '?t=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      renderLog(data.entries || []);
+    } catch(e) {
+      // Silent fail — section just stays empty / loading
+      document.getElementById('logGrid').innerHTML =
+        '<div class="log-empty-state">Journal temporarily unavailable.</div>';
+    }
+  }
+
+  // Load on page ready, refresh every 5 min
+  loadJournal();
+  setInterval(loadJournal, 300000);
 })();
 </script>
 </body>
