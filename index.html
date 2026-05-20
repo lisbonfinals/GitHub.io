@@ -3028,7 +3028,7 @@ setTimeout(loadLiveData, 300);
     updatedEl.textContent = 'Last entry: ' + (sorted[0] ? sorted[0].date + ' ' + sorted[0].time : '—');
 
     grid.innerHTML = sorted.map((e, i) => `
-      <div class="log-entry${e.pinned ? ' pinned' : ''} reveal" style="transition-delay:${(i % 3) * 0.06}s">
+      <div class="log-entry${e.pinned ? ' pinned' : ''}" style="opacity:1;transition-delay:${(i % 3) * 0.06}s">
         <div class="log-entry-meta">
           <span class="log-cat log-cat-${esc(e.category)}">${esc(CAT_LABELS[e.category] || e.category)}</span>
           <span class="log-ts">${esc(e.date)} ${esc(e.time)}</span>
@@ -3039,9 +3039,6 @@ setTimeout(loadLiveData, 300);
         <div class="log-entry-num">${String(i + 1).padStart(2, '0')}</div>
       </div>
     `).join('');
-
-    // Trigger reveal animation for new cards
-    if (window.initReveal) window.initReveal();
   }
 
   async function loadJournal() {
